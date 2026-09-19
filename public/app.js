@@ -66,6 +66,8 @@
   const formEveningPrayers = document.getElementById('formEveningPrayers');
   const groupPrayerPoints = document.getElementById('groupPrayerPoints');
   const groupMessageBody = document.getElementById('groupMessageBody');
+  const groupHymn = document.getElementById('groupHymn');
+  const groupBibleInOneYear = document.getElementById('groupBibleInOneYear');
 
   // Sunday School Specific Elements
   const groupSsLessonNum = document.getElementById('groupSsLessonNum');
@@ -120,6 +122,46 @@
   }
 
   // 3. Form Church Adaptability Engine
+  // 3. Form Church Adaptability Engine (Strict Church Isolation)
+  const churchManualOptions = {
+    rccg: [
+      { val: 'open_heavens', label: 'Open Heavens Daily Devotional' },
+      { val: 'rccg_ss_adult', label: 'RCCG Sunday School (Adult Students)' },
+      { val: 'rccg_ss_teacher', label: 'RCCG Sunday School (Adult Teachers)' },
+      { val: 'rccg_yaya_student', label: 'RCCG YAYA Sunday School (Students)' },
+      { val: 'rccg_yaya_teacher', label: 'RCCG YAYA Sunday School (Teachers Guide)' }
+    ],
+    dclm: [
+      { val: 'dclm', label: 'Daily Manna (Deeper Life)' }
+    ],
+    mfm: [
+      { val: 'mfm', label: 'Mountain Top Life (MFM)' }
+    ],
+    christ_embassy: [
+      { val: 'rhapsody', label: 'Rhapsody of Realities' }
+    ],
+    odm: [
+      { val: 'odm', label: 'Our Daily Manna (ODM)' }
+    ],
+    dunamis: [
+      { val: 'seeds', label: 'Seeds of Destiny' }
+    ],
+    winners: [
+      { val: 'winners', label: 'Word of Faith' }
+    ]
+  };
+
+  function updateManualDropdownForChurch(ch, selectedVal) {
+    if (!formManual) return;
+    const opts = churchManualOptions[ch] || churchManualOptions.rccg;
+    formManual.innerHTML = opts.map(o => `<option value="${o.val}">${o.label}</option>`).join('');
+    if (selectedVal && opts.some(o => o.val === selectedVal)) {
+      formManual.value = selectedVal;
+    } else {
+      formManual.value = opts[0].val;
+    }
+  }
+
   function adaptFormToChurch() {
     const ch = formChurch.value;
     const man = formManual.value;
@@ -127,27 +169,20 @@
     const isTeacher = man.includes('teacher');
     const isYaya = man.includes('yaya');
 
-    // Default hide all special sections
-    if (groupMotivationalQuote) groupMotivationalQuote.classList.add('hidden');
-    if (groupPropheticWord) groupPropheticWord.classList.add('hidden');
-    if (groupDevotionalCapsule) groupDevotionalCapsule.classList.add('hidden');
-    if (groupThoughtForTheDay) groupThoughtForTheDay.classList.add('hidden');
-    if (groupConfession) groupConfession.classList.add('hidden');
-    if (groupFurtherStudy) groupFurtherStudy.classList.add('hidden');
-    if (groupMorningPrayers) groupMorningPrayers.classList.add('hidden');
-    if (groupEveningPrayers) groupEveningPrayers.classList.add('hidden');
-    if (groupSsLessonNum) groupSsLessonNum.classList.add('hidden');
-    if (groupSsIntro) groupSsIntro.classList.add('hidden');
-    if (groupSsTeacher) groupSsTeacher.classList.add('hidden');
-    if (groupSsYouthFocus) groupSsYouthFocus.classList.add('hidden');
-    if (groupSsOutlines) groupSsOutlines.classList.add('hidden');
-    if (groupSsDiscussion) groupSsDiscussion.classList.add('hidden');
-    if (groupSsSummaryAssignment) groupSsSummaryAssignment.classList.add('hidden');
-    if (groupPrayerPoints) groupPrayerPoints.classList.remove('hidden');
-    if (groupMessageBody) groupMessageBody.classList.remove('hidden');
+    // 1. Hide ALL optional sections by default (Clean slate)
+    const allOptionalGroups = [
+      groupMotivationalQuote, groupPropheticWord, groupDevotionalCapsule,
+      groupThoughtForTheDay, groupConfession, groupFurtherStudy,
+      groupMorningPrayers, groupEveningPrayers, groupPrayerPoints,
+      groupHymn, groupBibleInOneYear, groupSsLessonNum, groupSsIntro,
+      groupSsTeacher, groupSsYouthFocus, groupSsOutlines, groupSsDiscussion,
+      groupSsSummaryAssignment
+    ];
+    allOptionalGroups.forEach(g => { if (g) g.classList.add('hidden'); });
 
+    // 2. Case A: Sunday School Manuals (Students or Teachers)
     if (isSs) {
-      if (formHeaderTitle) formHeaderTitle.textContent = "Sunday School Lesson Entry";
+      if (formHeaderTitle) formHeaderTitle.textContent = "Sunday School Manual Entry";
       if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Memory Verse Reference";
       if (lblFormReadingRef) lblFormReadingRef.textContent = "Bible Passage";
       if (lblFormMemoryText) lblFormMemoryText.textContent = "Memory Verse Quotation";
@@ -159,16 +194,31 @@
       if (groupSsOutlines) groupSsOutlines.classList.remove('hidden');
       if (groupSsDiscussion) groupSsDiscussion.classList.remove('hidden');
       if (groupSsSummaryAssignment) groupSsSummaryAssignment.classList.remove('hidden');
+      if (groupHymn) groupHymn.classList.remove('hidden');
       if (isTeacher && groupSsTeacher) groupSsTeacher.classList.remove('hidden');
       if (isYaya && groupSsYouthFocus) groupSsYouthFocus.classList.remove('hidden');
-      if (groupPrayerPoints) groupPrayerPoints.classList.add('hidden');
       return;
     }
 
-    if (formHeaderTitle) formHeaderTitle.textContent = "Devotional Entry";
+    // 3. Case B: Deeper Life (DCLM Daily Manna)
+    if (ch === 'dclm') {
+      if (formHeaderTitle) formHeaderTitle.textContent = "DCLM Daily Manna Entry";
+      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Key Verse Reference";
+      if (lblFormReadingRef) lblFormReadingRef.textContent = "Text (Scripture Reading)";
+      if (lblFormMemoryText) lblFormMemoryText.textContent = "Key Verse Quotation";
+      if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
+      if (lblFormPrayerPoints) lblFormPrayerPoints.textContent = "Prayer (Optional)";
+      if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
 
-    // MFM Mountain Top Life
+      if (groupThoughtForTheDay) groupThoughtForTheDay.classList.remove('hidden');
+      if (groupPrayerPoints) groupPrayerPoints.classList.remove('hidden');
+      if (groupBibleInOneYear) groupBibleInOneYear.classList.remove('hidden');
+      return;
+    }
+
+    // 4. Case C: MFM Mountain Top Life
     if (ch === 'mfm') {
+      if (formHeaderTitle) formHeaderTitle.textContent = "MFM Mountain Top Life Entry";
       if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Memory Verse Reference";
       if (lblFormReadingRef) lblFormReadingRef.textContent = "Fire Scripture Passage";
       if (lblFormMemoryText) lblFormMemoryText.textContent = "Memory Verse Quotation";
@@ -179,69 +229,75 @@
       if (groupPropheticWord) groupPropheticWord.classList.remove('hidden');
       if (groupMorningPrayers) groupMorningPrayers.classList.remove('hidden');
       if (groupEveningPrayers) groupEveningPrayers.classList.remove('hidden');
-      if (groupPrayerPoints) groupPrayerPoints.classList.add('hidden');
+      if (groupBibleInOneYear) groupBibleInOneYear.classList.remove('hidden');
       return;
     }
 
-    // DCLM Daily Manna
-    if (ch === 'dclm') {
-      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Key Verse Reference";
-      if (lblFormReadingRef) lblFormReadingRef.textContent = "Text (Scripture Reading)";
-      if (lblFormMemoryText) lblFormMemoryText.textContent = "Key Verse Text";
-      if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
-      if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
-
-      if (groupThoughtForTheDay) groupThoughtForTheDay.classList.remove('hidden');
-      return;
-    }
-
-    // Christ Embassy Rhapsody of Realities
+    // 5. Case D: Christ Embassy Rhapsody of Realities
     if (ch === 'christ_embassy') {
+      if (formHeaderTitle) formHeaderTitle.textContent = "Rhapsody of Realities Entry";
       if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Opening / Theme Scripture";
       if (lblFormReadingRef) lblFormReadingRef.textContent = "Theme Reading Reference";
       if (lblFormMemoryText) lblFormMemoryText.textContent = "Scripture Quotation";
       if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
-      if (lblFormHymn) lblFormHymn.textContent = "Hymn / Faith Declaration";
       if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "1-Year & 2-Year Bible Reading Plan";
 
       if (groupConfession) groupConfession.classList.remove('hidden');
       if (groupFurtherStudy) groupFurtherStudy.classList.remove('hidden');
-      if (groupPrayerPoints) groupPrayerPoints.classList.add('hidden');
+      if (groupBibleInOneYear) groupBibleInOneYear.classList.remove('hidden');
       return;
     }
 
-    // Our Daily Manna (ODM)
+    // 6. Case E: Our Daily Manna (ODM)
     if (ch === 'odm') {
+      if (formHeaderTitle) formHeaderTitle.textContent = "Our Daily Manna (ODM) Entry";
       if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Basic Scripture Reference";
       if (lblFormReadingRef) lblFormReadingRef.textContent = "Devotional Reading Passage";
+      if (lblFormMemoryText) lblFormMemoryText.textContent = "Basic Scripture Quotation";
+      if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
       if (lblFormPrayerPoints) lblFormPrayerPoints.textContent = "Prayer Bullets";
       if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
 
       if (groupDevotionalCapsule) groupDevotionalCapsule.classList.remove('hidden');
       if (groupPropheticWord) groupPropheticWord.classList.remove('hidden');
+      if (groupPrayerPoints) groupPrayerPoints.classList.remove('hidden');
+      if (groupBibleInOneYear) groupBibleInOneYear.classList.remove('hidden');
       return;
     }
 
-    // Dunamis Seeds of Destiny
+    // 7. Case F: Dunamis Seeds of Destiny
     if (ch === 'dunamis') {
+      if (formHeaderTitle) formHeaderTitle.textContent = "Seeds of Destiny Entry";
       if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Scripture Reference";
       if (lblFormReadingRef) lblFormReadingRef.textContent = "Bible Reading Passage";
+      if (lblFormMemoryText) lblFormMemoryText.textContent = "Scripture Quotation";
+      if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
+      if (lblFormPrayerPoints) lblFormPrayerPoints.textContent = "Prayer / Action Point";
+      if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
+
       if (groupThoughtForTheDay) groupThoughtForTheDay.classList.remove('hidden');
       if (groupPropheticWord) groupPropheticWord.classList.remove('hidden');
+      if (groupPrayerPoints) groupPrayerPoints.classList.remove('hidden');
+      if (groupBibleInOneYear) groupBibleInOneYear.classList.remove('hidden');
       return;
     }
 
-    // Default / RCCG Open Heavens
+    // 8. Case G: RCCG Open Heavens (Default)
+    if (formHeaderTitle) formHeaderTitle.textContent = "Open Heavens Devotional Entry";
     if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Memorise (Verse Ref)";
     if (lblFormReadingRef) lblFormReadingRef.textContent = "Bible Reading Passage";
     if (lblFormMemoryText) lblFormMemoryText.textContent = "Memory Verse Quotation";
     if (lblFormMessageText) lblFormMessageText.textContent = "Message Paragraphs";
-    if (lblFormPrayerPoints) lblFormPrayerPoints.textContent = "Prayer Point(s)";
+    if (lblFormPrayerPoints) lblFormPrayerPoints.textContent = "Prayer Point";
     if (lblFormHymn) lblFormHymn.textContent = "Hymn Lyrics / Title";
     if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
+
+    if (groupPrayerPoints) groupPrayerPoints.classList.remove('hidden');
+    if (groupHymn) groupHymn.classList.remove('hidden');
+    if (groupBibleInOneYear) groupBibleInOneYear.classList.remove('hidden');
   }
 
-  // Church selection auto-updates author and publication options
+  // Church selection auto-updates author, publications, and form layout
   if (formChurch) {
     formChurch.addEventListener('change', () => {
       const ch = formChurch.value;
@@ -256,23 +312,7 @@
       };
       if (authors[ch] && formAuthor) formAuthor.value = authors[ch];
 
-      if (formManual) {
-        if (ch === 'rccg') {
-          formManual.value = 'open_heavens';
-        } else if (ch === 'dclm') {
-          formManual.value = 'dclm';
-        } else if (ch === 'mfm') {
-          formManual.value = 'mfm';
-        } else if (ch === 'christ_embassy') {
-          formManual.value = 'rhapsody';
-        } else if (ch === 'odm') {
-          formManual.value = 'odm';
-        } else if (ch === 'dunamis') {
-          formManual.value = 'seeds';
-        } else if (ch === 'winners') {
-          formManual.value = 'winners';
-        }
-      }
+      updateManualDropdownForChurch(ch);
       adaptFormToChurch();
     });
   }
@@ -783,7 +823,7 @@
         const entry = store.dates[d] && store.dates[d][`${ch}_${man}`];
         if (entry) {
           formChurch.value = entry.church || 'rccg';
-          formManual.value = entry.manual || 'open_heavens';
+          updateManualDropdownForChurch(entry.church || 'rccg', entry.manual || 'open_heavens');
           adaptFormToChurch();
 
           formDate.value = entry.date || d;
@@ -1059,6 +1099,7 @@ To learn thy holy ways.`;
   }
 
   // Initial Load & Form Adaptation
+  if (formChurch) updateManualDropdownForChurch(formChurch.value);
   adaptFormToChurch();
   fetchStoredLibrary();
 
