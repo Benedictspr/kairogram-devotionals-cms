@@ -1,0 +1,22 @@
+{
+  "name": "kairogram-devotionals-cms",
+  "version": "1.0.0",
+  "description": "Cloud Devotionals CMS & Live API for Kairogram Mobile App (RCCG, Deeper Life, MFM, Christ Embassy, ODM, Winners, Dunamis)",
+  "main": "api/devotionals.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "kairogram",
+    "devotionals",
+    "open-heavens",
+    "rccg",
+    "deeperlife",
+    "cms",
+    "api"
+  ],
+  "author": "Kairogram Team",
+  "license": "MIT",
+  "dependencies": {}
+}

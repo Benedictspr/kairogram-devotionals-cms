@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/devotionals/latest",
+      "destination": "/api/devotionals?latest=true"
+    },
+    {
+      "source": "/api/latest",
+      "destination": "/api/devotionals?latest=true"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/devotionals"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ]
+}
