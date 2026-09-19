@@ -6,7 +6,7 @@
   <title>Kairogram Devotionals Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@600;700;800&family=Funnel+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@600;700;800&family=Funnel+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,18 +27,18 @@
           <h1 class="brand-title">Kairogram Studio</h1>
           <div class="live-pill">
             <span class="live-dot"></span>
-            <span>Live on Vercel</span>
+            <span>Live Cloud CMS</span>
           </div>
         </div>
       </div>
 
       <div class="top-bar-actions">
-        <button type="button" class="btn-top-icon" id="btnAutoFetchUpcoming" title="Auto-Fetch Tomorrow">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
-            <polyline points="23 4 23 10 17 10"></polyline>
-            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        <button type="button" class="btn-top-icon" id="btnGoToApiDocs" title="View API Details & Docs">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
           </svg>
-          <span class="btn-text-hide-mobile">Auto-Fetch</span>
+          <span class="btn-text-hide-mobile">API Docs</span>
         </button>
         <button type="button" class="btn-top-icon" id="btnQuickExportJson" title="Export Database JSON">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -50,19 +50,9 @@
       </div>
     </header>
 
-    <!-- Segmented Touch Navigation (3 Simple Tabs) -->
+    <!-- Segmented Touch Navigation (3 Primary Tabs) -->
     <nav class="mobile-tabs-bar">
-      <button type="button" class="tab-item active" data-tab="tabBatchIngest">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
-          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-          <line x1="9" y1="12" x2="15" y2="12"></line>
-          <line x1="9" y1="16" x2="13" y2="16"></line>
-        </svg>
-        <span>Quick Paste</span>
-      </button>
-
-      <button type="button" class="tab-item" data-tab="tabSingleForm">
+      <button type="button" class="tab-item active" data-tab="tabSingleForm">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
           <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
           <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -77,101 +67,21 @@
         </svg>
         <span>Library (<span id="countStoredLib">0</span>)</span>
       </button>
+
+      <button type="button" class="tab-item" data-tab="tabApiDocs">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <span>API & Docs</span>
+      </button>
     </nav>
 
     <!-- Main Views Container -->
     <main class="mobile-content-viewport">
 
-      <!-- ================= TAB 1: QUICK PASTE (PRIMARY MOBILE VIEW) ================= -->
-      <section class="mobile-tab-view active" id="tabBatchIngest">
-        
-        <!-- Ministry Selection -->
-        <div class="mobile-card">
-          <div class="card-title-row">
-            <span class="card-step-badge">1</span>
-            <label class="card-label-lg" for="batchChurchSelect">Select Church Ministry</label>
-          </div>
-          <select class="mobile-select-lg" id="batchChurchSelect">
-            <option value="rccg_open_heavens">RCCG • Open Heavens (Pastor Adeboye)</option>
-            <option value="dclm_dclm">Deeper Life • Daily Manna (Pastor Kumuyi)</option>
-            <option value="mfm_mfm">MFM • Mountain Top Life (Dr. Olukoya)</option>
-            <option value="christ_embassy_rhapsody">Christ Embassy • Rhapsody of Realities (Pastor Chris)</option>
-            <option value="odm_odm">Our Daily Manna • ODM (Bishop Chris)</option>
-            <option value="dunamis_seeds">Dunamis • Seeds of Destiny (Dr. Enenche)</option>
-            <option value="winners_winners">Winners Chapel • Word of Faith (Bishop Oyedepo)</option>
-            <option value="rccg_rccg_ss_adult">RCCG Sunday School • Adult Students</option>
-            <option value="rccg_rccg_ss_teacher">RCCG Sunday School • Teachers Manual</option>
-            <option value="rccg_rccg_yaya_student">RCCG YAYA Sunday School • Youths</option>
-          </select>
-        </div>
-
-        <!-- Text Input Box -->
-        <div class="mobile-card">
-          <div class="card-title-row">
-            <div class="title-with-step">
-              <span class="card-step-badge">2</span>
-              <label class="card-label-lg" for="batchTextInput">Paste Devotional(s)</label>
-            </div>
-            <button type="button" class="btn-clipboard-paste" id="btnClipboardPaste" title="Paste from phone clipboard">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-              <span>Paste</span>
-            </button>
-          </div>
-
-          <textarea class="mobile-textarea" id="batchTextInput" placeholder="Paste 1 day, 7 days, or a whole month here...
-
-Real-life headings auto-detected:
-• RCCG: MEMORISE, BIBLE READING, PRAYER POINT
-• DCLM: KEY VERSE, TEXT, THOUGHT FOR THE DAY
-• MFM: FIRE SCRIPTURE, MOTIVATIONAL QUOTE, MORNING/EVENING PRAYERS
-• Rhapsody: OPENING SCRIPTURE, CONFESSION, FURTHER STUDY
-• ODM: DEVOTIONAL CAPSULE, BASIC SCRIPTURE, PRAYER BULLETS
-• Sunday School: LESSON, OUTLINES, DISCUSSION, ASSIGNMENT"></textarea>
-
-          <!-- Quick Template Helper Chips -->
-          <div class="quick-helpers-row" style="flex-wrap:wrap;gap:6px;">
-            <button type="button" class="btn-micro-chip" id="btnPasteSampleOpenHeavens">Open Heavens</button>
-            <button type="button" class="btn-micro-chip" id="btnPasteSampleDclm">Daily Manna</button>
-            <button type="button" class="btn-micro-chip" id="btnPasteSampleMfm">MFM Mountain Top</button>
-            <button type="button" class="btn-micro-chip" id="btnPasteSampleRhapsody">Rhapsody</button>
-            <button type="button" class="btn-micro-chip" id="btnPasteSampleSundaySchool">Sunday School</button>
-            <button type="button" class="btn-micro-chip text-muted" id="btnClearBatchInput">Clear</button>
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="mobile-actions-stack">
-            <button type="button" class="btn-mobile-primary" id="btnParseBatch">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-              <span>Parse & Preview Days</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Parsed Days Preview & Direct Cloud Publishing -->
-        <div class="mobile-card" id="parsedCardSection">
-          <div class="card-title-row">
-            <div class="title-with-step">
-              <span class="card-step-badge">3</span>
-              <span class="card-label-lg">Parsed Days (<span id="parsedDaysCount">0</span>)</span>
-            </div>
-            <button type="button" class="btn-publish-all" id="btnPublishAllBatch" disabled>
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-              <span>Publish to Kairogram</span>
-            </button>
-          </div>
-
-          <div class="mobile-parsed-list" id="parsedListContainer">
-            <div class="mobile-empty-state">
-              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-              <p>Paste text above and tap <strong>Parse & Preview Days</strong> to see them here.</p>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ================= TAB 2: ADAPTIVE FORM ENTRY ================= -->
-      <section class="mobile-tab-view" id="tabSingleForm">
+      <!-- ================= TAB 1: ADAPTIVE FORM ENTRY (PRIMARY VIEW) ================= -->
+      <section class="mobile-tab-view active" id="tabSingleForm">
         <div class="mobile-card">
           <div class="card-title-row">
             <h2 class="card-label-lg" id="formHeaderTitle">Devotional Entry</h2>
@@ -187,7 +97,7 @@ Real-life headings auto-detected:
               <option value="rccg">RCCG (Redeemed Christian Church of God)</option>
               <option value="dclm">Deeper Life (DCLM)</option>
               <option value="mfm">MFM (Mountain of Fire & Miracles)</option>
-              <option value="christ_embassy">Christ Embassy (Rhapsody)</option>
+              <option value="christ_embassy">Christ Embassy (Rhapsody of Realities)</option>
               <option value="odm">Our Daily Manna (ODM)</option>
               <option value="dunamis">Dunamis International</option>
               <option value="winners">Winners Chapel (Living Faith)</option>
@@ -198,15 +108,10 @@ Real-life headings auto-detected:
             <label class="field-label">Publication / Manual</label>
             <select class="mobile-select-lg" id="formManual">
               <option value="open_heavens">Open Heavens Daily Devotional</option>
-              <option value="dclm">Daily Manna</option>
-              <option value="mfm">Mountain Top Life</option>
-              <option value="rhapsody">Rhapsody of Realities</option>
-              <option value="odm">Our Daily Manna</option>
-              <option value="seeds">Seeds of Destiny</option>
-              <option value="rccg_ss_adult">RCCG Sunday School (Adult Students)</option>
-              <option value="rccg_ss_teacher">RCCG Sunday School (Adult Teachers)</option>
-              <option value="rccg_yaya_student">RCCG YAYA Sunday School (Students)</option>
-              <option value="rccg_yaya_teacher">RCCG YAYA Sunday School (Teachers Guide)</option>
+              <option value="rccg_ss_adult">RCCG Sunday School (Adult - Student Manual)</option>
+              <option value="rccg_ss_teacher">RCCG Sunday School (Adult - Teacher's Guide)</option>
+              <option value="rccg_yaya_student">RCCG YAYA Sunday School (Youth - Student Manual)</option>
+              <option value="rccg_yaya_teacher">RCCG YAYA Sunday School (Youth - Teacher's Guide)</option>
             </select>
           </div>
 
@@ -272,19 +177,31 @@ Real-life headings auto-detected:
             <textarea class="mobile-textarea sm" id="formSsIntro" placeholder="Class introduction..."></textarea>
           </div>
 
-          <!-- Teacher's Aim & Objectives -->
+          <!-- Teacher's Aim & Objectives (Adult & YAYA Teacher) -->
           <div class="mobile-field-group hidden" id="groupSsTeacher">
-            <label class="field-label">Teacher's Lesson Aim & Objectives</label>
-            <textarea class="mobile-textarea sm" id="formSsTeacherAim" placeholder="Teaching aim and objectives..."></textarea>
+            <label class="field-label">Teacher's Lesson Aim</label>
+            <input type="text" class="mobile-input-lg" id="formSsTeacherAim" placeholder="e.g. To teach students the biblical foundations of personal sanctification.">
+            
+            <label class="field-label" style="margin-top:8px;">Teacher's Lesson Objectives (One per line)</label>
+            <textarea class="mobile-textarea sm" id="formSsTeacherObjectives" placeholder="1. Identify the biblical qualities of a sanctified vessel&#10;2. Understand the dangers of spiritual compromise&#10;3. Practice daily consecration unto God"></textarea>
           </div>
 
-          <!-- YAYA Youth Focus -->
+          <!-- Teacher's Class Activities & Marking Guide (Teacher's Manual) -->
+          <div class="mobile-field-group hidden" id="groupSsTeacherActivities">
+            <label class="field-label">Class Activities & Evaluation (Teacher's Guide)</label>
+            <textarea class="mobile-textarea sm" id="formSsClassActivities" placeholder="e.g. Class Activity 1: Group discussion on overcoming peer pressure in workplace. (5 marks)"></textarea>
+
+            <label class="field-label" style="margin-top:8px;">Marking Guide / Scheme</label>
+            <textarea class="mobile-textarea sm" id="formSsMarkingScheme" placeholder="Marking Scheme: Class contribution (10mks), Active participation (10mks). Total: 20 marks."></textarea>
+          </div>
+
+          <!-- YAYA Youth Focus / Relevance (YAYA Student & Teacher) -->
           <div class="mobile-field-group hidden" id="groupSsYouthFocus">
-            <label class="field-label">Youth Focus / Relevance</label>
-            <input type="text" class="mobile-input-lg" id="formSsYouthFocus" placeholder="Youth relevance note...">
+            <label class="field-label">Youth Focus & Contemporary Relevance (YAYA)</label>
+            <textarea class="mobile-textarea sm" id="formSsYouthFocus" placeholder="How this lesson applies directly to youth lifestyle, digital media, career choices, and relationship purity..."></textarea>
           </div>
 
-          <!-- Message Content / Outlines -->
+          <!-- Message Content / Background -->
           <div class="mobile-field-group" id="groupMessageBody">
             <label class="field-label" id="lblFormMessageText">Devotional Message (Empty line between paragraphs)</label>
             <textarea class="mobile-textarea md" id="formMessageText" placeholder="Devotional message content..."></textarea>
@@ -364,7 +281,7 @@ Real-life headings auto-detected:
         </div>
       </section>
 
-      <!-- ================= TAB 3: LIBRARY ================= -->
+      <!-- ================= TAB 2: LIBRARY ================= -->
       <section class="mobile-tab-view" id="tabLibrary">
         <div class="mobile-card">
           <div class="card-title-row">
@@ -386,6 +303,146 @@ Real-life headings auto-detected:
         <div class="mobile-library-list" id="libraryGrid">
           <!-- Dynamically populated with mobile cards -->
         </div>
+      </section>
+
+      <!-- ================= TAB 3: API & DOCUMENTATION ================= -->
+      <section class="mobile-tab-view" id="tabApiDocs">
+
+        <!-- Live Endpoint Overview Card -->
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <div class="title-with-step">
+              <span class="card-step-badge">1</span>
+              <h2 class="card-label-lg">Live API Endpoints</h2>
+            </div>
+            <button type="button" class="btn-top-icon" id="btnCopyApiBaseUrl" title="Copy Base URL">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+              <span>Copy URL</span>
+            </button>
+          </div>
+
+          <p class="api-card-intro">Kairogram mobile app automatically connects to this cloud feed with zero user input. All endpoints support standard CORS (<code>*</code>).</p>
+
+          <div class="api-endpoints-list">
+            <!-- Endpoint 1: Latest -->
+            <div class="api-endpoint-row">
+              <div class="api-endpoint-header">
+                <span class="api-method-badge get">GET</span>
+                <code class="api-endpoint-path">/api/devotionals/latest</code>
+              </div>
+              <p class="api-endpoint-desc">Fetches the complete active catalog (publications, dates, and Sunday school lessons) consumed directly by Kairogram zero-tap sync.</p>
+            </div>
+
+            <!-- Endpoint 2: By Date -->
+            <div class="api-endpoint-row">
+              <div class="api-endpoint-header">
+                <span class="api-method-badge get">GET</span>
+                <code class="api-endpoint-path">/api/devotionals?date=YYYY-MM-DD</code>
+              </div>
+              <p class="api-endpoint-desc">Retrieves all devotional editions published for a specific date (e.g. <code>2026-09-20</code>).</p>
+            </div>
+
+            <!-- Endpoint 3: By Church -->
+            <div class="api-endpoint-row">
+              <div class="api-endpoint-header">
+                <span class="api-method-badge get">GET</span>
+                <code class="api-endpoint-path">/api/devotionals?church=rccg</code>
+              </div>
+              <p class="api-endpoint-desc">Filters library entries for a specific church (<code>rccg</code>, <code>dclm</code>, <code>mfm</code>, <code>christ_embassy</code>, <code>odm</code>, <code>dunamis</code>, <code>winners</code>).</p>
+            </div>
+
+            <!-- Endpoint 4: POST Ingestion -->
+            <div class="api-endpoint-row">
+              <div class="api-endpoint-header">
+                <span class="api-method-badge post">POST</span>
+                <code class="api-endpoint-path">/api/devotionals</code>
+              </div>
+              <p class="api-endpoint-desc">Publishes a single devotional object or an array of devotionals to the cloud database.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Live Feed Tester Card -->
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <div class="title-with-step">
+              <span class="card-step-badge">2</span>
+              <h3 class="card-label-lg">Live Feed Tester</h3>
+            </div>
+            <div class="api-status-badge" id="livePingStatus">
+              <span class="live-dot"></span>
+              <span id="livePingText">Ready</span>
+            </div>
+          </div>
+
+          <p class="api-card-intro">Test your live Vercel cloud feed in real time. Tapping below queries <code>/api/devotionals/latest</code> and calculates live latency.</p>
+
+          <button type="button" class="btn-mobile-primary" id="btnTestLiveApi">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Ping Live Cloud Feed</span>
+          </button>
+
+          <div class="api-code-container hidden" id="apiTestResponseWrap">
+            <div class="api-code-header">
+              <span class="api-code-title" id="apiTestLatency">Response (200 OK • 0ms)</span>
+              <button type="button" class="btn-clipboard-paste" id="btnCopyApiResponse" title="Copy Response">
+                <span>Copy</span>
+              </button>
+            </div>
+            <pre class="api-code-block" id="apiTestJsonPre"><code>{}</code></pre>
+          </div>
+        </div>
+
+        <!-- JSON Schemas Card -->
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <div class="title-with-step">
+              <span class="card-step-badge">3</span>
+              <h3 class="card-label-lg">JSON Schemas</h3>
+            </div>
+          </div>
+
+          <p class="api-card-intro">Select a publication schema below to inspect its exact structure and payload format:</p>
+
+          <div class="mobile-filter-pills" id="schemaFilterPills" style="margin-bottom:8px;">
+            <button type="button" class="filter-pill active" data-schema="open_heavens">Open Heavens</button>
+            <button type="button" class="filter-pill" data-schema="ss_adult">SS Adult</button>
+            <button type="button" class="filter-pill" data-schema="ss_teacher">SS Teacher</button>
+            <button type="button" class="filter-pill" data-schema="ss_yaya">YAYA (Youth)</button>
+            <button type="button" class="filter-pill" data-schema="dclm">Daily Manna</button>
+            <button type="button" class="filter-pill" data-schema="mfm">MFM</button>
+          </div>
+
+          <div class="api-code-container">
+            <div class="api-code-header">
+              <span class="api-code-title" id="schemaTitleLabel">RCCG Open Heavens JSON Schema</span>
+              <button type="button" class="btn-clipboard-paste" id="btnCopySchema" title="Copy Schema">
+                <span>Copy</span>
+              </button>
+            </div>
+            <pre class="api-code-block" id="schemaJsonPre"><code>{}</code></pre>
+          </div>
+        </div>
+
+        <!-- Kairogram App Integration Card -->
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <div class="title-with-step">
+              <span class="card-step-badge">4</span>
+              <h3 class="card-label-lg">Kairogram Sync Mechanism</h3>
+            </div>
+          </div>
+
+          <div class="api-sync-info-box">
+            <h4 class="api-info-subtitle">⚡ Zero-Tap Real-Time Updates</h4>
+            <p class="api-info-text">
+              1. Whenever you tap <strong>Publish</strong> in this studio, the entry is immediately stored in the cloud API and broadcasted across active browser tabs.<br>
+              2. The Kairogram mobile app automatically checks for cloud updates on launch, whenever you open the <strong>Devotionals</strong> tab, and whenever the device regains Internet connectivity.<br>
+              3. If you want permanent GitHub persistence for all CMS updates on serverless reboots, add <code>GITHUB_TOKEN</code> and <code>GITHUB_REPO</code> in your Vercel project environment variables.
+            </p>
+          </div>
+        </div>
+
       </section>
 
     </main>

@@ -235,7 +235,7 @@ module.exports = async (req, res) => {
         };
 
         // If Sunday school, include specific outlines
-        if (item.isSundaySchool || manual.includes('ss') || manual.includes('sunday_school')) {
+        if (item.isSundaySchool || manual.includes('ss') || manual.includes('sunday_school') || manual.includes('yaya')) {
           entryPayload.isSundaySchool = true;
           entryPayload.lessonNum = item.lessonNum || 1;
           entryPayload.introduction = item.introduction || "";

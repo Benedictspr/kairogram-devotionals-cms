@@ -2,7 +2,7 @@
   "version": "1.0",
   "date": "2026-09-18",
   "dateLabel": "Friday, September 18, 2026",
-  "updatedAt": "2026-09-19T12:43:46.311Z",
+  "updatedAt": "2026-09-19T14:22:16.157Z",
   "source": "flatimes.com (Tier 3 Cloud Sync)",
   "publications": {
     "rccg_open_heavens": {
@@ -118,36 +118,55 @@
     "rccg_rccg_ss_teacher": {
       "church": "rccg",
       "manual": "rccg_ss_teacher",
-      "title": "RCCG Sunday School (Adult Teachers Manual)",
-      "lessonNum": 38,
-      "quarter": 3,
-      "topic": "Lesson 38: Water Baptism",
-      "date": "Sunday, September 20, 2026",
-      "memoryVerseRef": "Matthew 28:19",
-      "memoryVerseText": "Go ye therefore, and teach all nations, baptizing them in the name of the Father, and of the Son, and of the Holy Ghost.",
-      "bibleReadingRef": "Acts 8:26-39",
-      "introduction": "Water baptism is a cardinal ordinance in Christianity instituted by Jesus Christ for every believer who has surrendered their life to Him.",
+      "title": "The Sanctified Vessel (Teacher Test)",
+      "author": "RCCG Sunday School Directorate",
+      "date": "2026-09-20",
+      "dateLabel": "2026-09-20",
+      "topic": "The Sanctified Vessel (Teacher Test)",
+      "memoryVerseRef": "",
+      "memoryVerseText": "",
+      "bibleReadingRef": "",
+      "fireScriptureRef": "",
+      "textRef": "",
+      "basicScriptureRef": "",
+      "message": [],
+      "prayerPoints": [],
+      "hymn": "",
+      "thoughtForTheDay": "",
+      "motivationalQuote": "",
+      "confession": "",
+      "propheticWord": "",
+      "propheticDeclaration": "",
+      "devotionalCapsule": "",
+      "morningPrayers": [],
+      "eveningPrayers": [],
+      "furtherStudy": [],
+      "oneYearReading": "",
+      "twoYearReading": "",
+      "bibleInOneYear": "",
+      "rememberThis": "",
+      "assignments": "",
+      "readTime": "4 min read",
+      "source": "Kairogram Devotionals Cloud CMS",
+      "updatedAt": "2026-09-19T14:22:16.150Z",
+      "isSundaySchool": true,
+      "lessonNum": 3,
+      "introduction": "Intro text",
       "outlines": [
-        {
-          "title": "Outline 1: Significance and Biblical Mode of Baptism",
-          "points": [
-            "1. Baptism by immersion symbolizes identification with Christ's death, burial, and resurrection (Romans 6:3-4).",
-            "2. It is a public confession of internal transformation through faith in Christ Jesus (Galatians 3:27)."
-          ]
-        },
-        {
-          "title": "Outline 2: Prerequisites and Spiritual Impact",
-          "points": [
-            "1. Genuine repentance and faith in Jesus Christ are prerequisites (Mark 16:16).",
-            "2. Water baptism does not save by itself; it seals the believer's covenant walk with God (1 Peter 3:21)."
-          ]
-        }
+        "Outline 1",
+        "Outline 2"
       ],
-      "discussion": "Why did Jesus, who knew no sin, submit Himself to John's baptism in Jordan?",
-      "summary": "Water baptism is non-negotiable for true discipleship.",
-      "assignment": "Witness to one unsaved person and encourage a newly converted believer to enroll for water baptism classes.",
-      "teachingAim": "To guide the class to understand the scriptural mandate and spiritual significance of water baptism.",
-      "classActivities": "Engage class in reading Acts 8:26-39 and comparing Philip's method with modern cultural practices."
+      "discussion": "",
+      "summary": "",
+      "assignment": "",
+      "teachingAim": "To teach holiness",
+      "teacherObjectives": [
+        "Objective 1",
+        "Objective 2"
+      ],
+      "youthFocus": "",
+      "classActivities": "Activity 1",
+      "markingScheme": "10 marks"
     },
     "rccg_rccg_yaya_student": {
       "church": "rccg",
@@ -283,8 +302,115 @@
         "readTime": "4 min read",
         "source": "Kairogram Devotionals Cloud CMS",
         "updatedAt": "2026-09-19T12:43:46.310Z"
+      },
+      "rccg_rccg_ss_teacher": {
+        "church": "rccg",
+        "manual": "rccg_ss_teacher",
+        "title": "The Sanctified Vessel (Teacher Test)",
+        "author": "RCCG Sunday School Directorate",
+        "date": "2026-09-20",
+        "dateLabel": "2026-09-20",
+        "topic": "The Sanctified Vessel (Teacher Test)",
+        "memoryVerseRef": "",
+        "memoryVerseText": "",
+        "bibleReadingRef": "",
+        "fireScriptureRef": "",
+        "textRef": "",
+        "basicScriptureRef": "",
+        "message": [],
+        "prayerPoints": [],
+        "hymn": "",
+        "thoughtForTheDay": "",
+        "motivationalQuote": "",
+        "confession": "",
+        "propheticWord": "",
+        "propheticDeclaration": "",
+        "devotionalCapsule": "",
+        "morningPrayers": [],
+        "eveningPrayers": [],
+        "furtherStudy": [],
+        "oneYearReading": "",
+        "twoYearReading": "",
+        "bibleInOneYear": "",
+        "rememberThis": "",
+        "assignments": "",
+        "readTime": "4 min read",
+        "source": "Kairogram Devotionals Cloud CMS",
+        "updatedAt": "2026-09-19T14:22:16.150Z",
+        "isSundaySchool": true,
+        "lessonNum": 3,
+        "introduction": "Intro text",
+        "outlines": [
+          "Outline 1",
+          "Outline 2"
+        ],
+        "discussion": "",
+        "summary": "",
+        "assignment": "",
+        "teachingAim": "To teach holiness",
+        "teacherObjectives": [
+          "Objective 1",
+          "Objective 2"
+        ],
+        "youthFocus": "",
+        "classActivities": "Activity 1",
+        "markingScheme": "10 marks"
       }
     }
   },
-  "sunday_school_lessons": []
+  "sunday_school_lessons": [
+    {
+      "church": "rccg",
+      "manual": "rccg_ss_teacher",
+      "title": "The Sanctified Vessel (Teacher Test)",
+      "author": "RCCG Sunday School Directorate",
+      "date": "2026-09-20",
+      "dateLabel": "2026-09-20",
+      "topic": "The Sanctified Vessel (Teacher Test)",
+      "memoryVerseRef": "",
+      "memoryVerseText": "",
+      "bibleReadingRef": "",
+      "fireScriptureRef": "",
+      "textRef": "",
+      "basicScriptureRef": "",
+      "message": [],
+      "prayerPoints": [],
+      "hymn": "",
+      "thoughtForTheDay": "",
+      "motivationalQuote": "",
+      "confession": "",
+      "propheticWord": "",
+      "propheticDeclaration": "",
+      "devotionalCapsule": "",
+      "morningPrayers": [],
+      "eveningPrayers": [],
+      "furtherStudy": [],
+      "oneYearReading": "",
+      "twoYearReading": "",
+      "bibleInOneYear": "",
+      "rememberThis": "",
+      "assignments": "",
+      "readTime": "4 min read",
+      "source": "Kairogram Devotionals Cloud CMS",
+      "updatedAt": "2026-09-19T14:22:16.150Z",
+      "isSundaySchool": true,
+      "lessonNum": 3,
+      "introduction": "Intro text",
+      "outlines": [
+        "Outline 1",
+        "Outline 2"
+      ],
+      "discussion": "",
+      "summary": "",
+      "assignment": "",
+      "teachingAim": "To teach holiness",
+      "teacherObjectives": [
+        "Objective 1",
+        "Objective 2"
+      ],
+      "youthFocus": "",
+      "classActivities": "Activity 1",
+      "markingScheme": "10 marks"
+    }
+  ]
 }
