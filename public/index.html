@@ -2,328 +2,286 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kairogram Devotionals Cloud Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kairogram Devotionals Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Funnel+Display:wght@500;600;700;800&family=Funnel+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@600;700;800&family=Funnel+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="cms-app">
-    <!-- Top Stately Navigation Bar -->
-    <header class="cms-navbar">
-      <div class="cms-brand">
-        <div class="cms-logo-icon">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2">
+  <div class="mobile-app-wrapper">
+
+    <!-- Top Compact Mobile App Bar -->
+    <header class="app-top-bar">
+      <div class="brand-wrap">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             <line x1="12" y1="6" x2="12" y2="13"></line>
             <line x1="8.5" y1="9.5" x2="15.5" y2="9.5"></line>
           </svg>
         </div>
-        <div class="cms-brand-text">
-          <span class="cms-kicker">CANONICAL PUBLISHER</span>
-          <h1 class="cms-title">Kairogram Devotionals Cloud Studio</h1>
+        <div class="brand-meta">
+          <h1 class="brand-title">Kairogram Studio</h1>
+          <div class="live-pill">
+            <span class="live-dot"></span>
+            <span>Live on Vercel</span>
+          </div>
         </div>
       </div>
 
-      <div class="cms-nav-actions">
-        <div class="api-status-badge">
-          <span class="status-dot online"></span>
-          <span class="status-label">Vercel API Ready</span>
-        </div>
-        <button type="button" class="cms-btn cms-btn-outline" id="btnQuickExportJson" title="Export Full Database JSON">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          <span>Export JSON</span>
+      <div class="top-bar-actions">
+        <button type="button" class="btn-top-icon" id="btnAutoFetchUpcoming" title="Auto-Fetch Tomorrow">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <span class="btn-text-hide-mobile">Auto-Fetch</span>
         </button>
-        <button type="button" class="cms-btn cms-btn-primary" id="btnAutoFetchUpcoming" title="1-Click Scrape Today & Tomorrow">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-          <span>Auto-Fetch Tomorrow</span>
+        <button type="button" class="btn-top-icon" id="btnQuickExportJson" title="Export Database JSON">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
         </button>
       </div>
     </header>
 
-    <!-- Main Navigation Ribbon -->
-    <nav class="cms-tabs-ribbon">
-      <button type="button" class="cms-tab-btn active" data-tab="tabBatchIngest">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
-        <span>Multi-Day Batch Ingestion</span>
+    <!-- Segmented Touch Navigation (3 Simple Tabs) -->
+    <nav class="mobile-tabs-bar">
+      <button type="button" class="tab-item active" data-tab="tabBatchIngest">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+          <line x1="9" y1="12" x2="15" y2="12"></line>
+          <line x1="9" y1="16" x2="13" y2="16"></line>
+        </svg>
+        <span>Quick Paste</span>
       </button>
-      <button type="button" class="cms-tab-btn" data-tab="tabSingleForm">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-        <span>Single Day Editor</span>
+
+      <button type="button" class="tab-item" data-tab="tabSingleForm">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg>
+        <span>Form Entry</span>
       </button>
-      <button type="button" class="cms-tab-btn" data-tab="tabLibrary">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        <span>Stored Library (<span id="countStoredLib">0</span>)</span>
-      </button>
-      <button type="button" class="cms-tab-btn" data-tab="tabAppConnection">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-        <span>Kairogram App Link & API</span>
+
+      <button type="button" class="tab-item" data-tab="tabLibrary">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Library (<span id="countStoredLib">0</span>)</span>
       </button>
     </nav>
 
-    <!-- Main Workspace -->
-    <main class="cms-workspace">
+    <!-- Main Views Container -->
+    <main class="mobile-content-viewport">
 
-      <!-- ================= TAB 1: MULTI-DAY BATCH INGESTION STUDIO ================= -->
-      <section class="cms-view active" id="tabBatchIngest">
-        <div class="view-header-row">
-          <div>
-            <h2 class="view-title">Multi-Day Batch Devotional Ingestion</h2>
-            <p class="view-subtitle">Paste an entire week or month of devotionals at once. The smart parser automatically extracts Dates, Topics, Scriptures, Verses, Messages, and Prayer points.</p>
+      <!-- ================= TAB 1: QUICK PASTE (PRIMARY MOBILE VIEW) ================= -->
+      <section class="mobile-tab-view active" id="tabBatchIngest">
+        
+        <!-- Ministry Selection -->
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <span class="card-step-badge">1</span>
+            <label class="card-label-lg" for="batchChurchSelect">Select Church Ministry</label>
           </div>
-          <div class="church-selector-bar">
-            <span class="selector-label">Target Ministry:</span>
-            <select class="cms-select" id="batchChurchSelect">
-              <option value="rccg_open_heavens">RCCG • Open Heavens (Pastor E.A. Adeboye)</option>
-              <option value="dclm_dclm">Deeper Life • Daily Manna (Pastor W.F. Kumuyi)</option>
-              <option value="mfm_mfm">MFM • Mountain Top Life (Dr. D.K. Olukoya)</option>
-              <option value="christ_embassy_rhapsody">Christ Embassy • Rhapsody of Realities (Pastor Chris)</option>
-              <option value="odm_odm">Our Daily Manna • ODM (Bishop Chris Kwakpovwe)</option>
-              <option value="winners_winners">Winners Chapel • Word of Faith</option>
-              <option value="dunamis_seeds">Dunamis • Seeds of Destiny (Dr. Paul Enenche)</option>
-              <option value="rccg_rccg_ss_adult">RCCG Sunday School • Adult Students</option>
-              <option value="rccg_rccg_ss_teacher">RCCG Sunday School • Teachers Manual</option>
-              <option value="rccg_rccg_yaya_student">RCCG YAYA Sunday School • Students</option>
+          <select class="mobile-select-lg" id="batchChurchSelect">
+            <option value="rccg_open_heavens">RCCG • Open Heavens (Pastor Adeboye)</option>
+            <option value="dclm_dclm">Deeper Life • Daily Manna (Pastor Kumuyi)</option>
+            <option value="mfm_mfm">MFM • Mountain Top Life (Dr. Olukoya)</option>
+            <option value="christ_embassy_rhapsody">Christ Embassy • Rhapsody of Realities</option>
+            <option value="odm_odm">Our Daily Manna • ODM (Bishop Chris)</option>
+            <option value="winners_winners">Winners Chapel • Word of Faith</option>
+            <option value="dunamis_seeds">Dunamis • Seeds of Destiny (Dr. Enenche)</option>
+            <option value="rccg_rccg_ss_adult">RCCG Sunday School • Adult Students</option>
+            <option value="rccg_rccg_ss_teacher">RCCG Sunday School • Teachers Manual</option>
+            <option value="rccg_rccg_yaya_student">RCCG YAYA Sunday School • Students</option>
+          </select>
+        </div>
+
+        <!-- Text Input Box -->
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <div class="title-with-step">
+              <span class="card-step-badge">2</span>
+              <label class="card-label-lg" for="batchTextInput">Paste Devotional(s)</label>
+            </div>
+            <button type="button" class="btn-clipboard-paste" id="btnClipboardPaste" title="Paste from phone clipboard">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+              <span>Paste</span>
+            </button>
+          </div>
+
+          <textarea class="mobile-textarea" id="batchTextInput" placeholder="Paste 1 day, 7 days, or an entire month of devotions here...
+
+Smart parser automatically extracts:
+• Date & Topic
+• Memory Verse & Text
+• Bible Reading Reference
+• Message paragraphs & Prayers"></textarea>
+
+          <!-- Quick Template Helper Chips -->
+          <div class="quick-helpers-row">
+            <button type="button" class="btn-micro-chip" id="btnPasteSampleOpenHeavens">Open Heavens Sample</button>
+            <button type="button" class="btn-micro-chip" id="btnPasteSampleDclm">Daily Manna Sample</button>
+            <button type="button" class="btn-micro-chip text-muted" id="btnClearBatchInput">Clear</button>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mobile-actions-stack">
+            <button type="button" class="btn-mobile-primary" id="btnParseBatch">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>Parse & Preview Days</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Parsed Days Preview & Direct Cloud Publishing -->
+        <div class="mobile-card" id="parsedCardSection">
+          <div class="card-title-row">
+            <div class="title-with-step">
+              <span class="card-step-badge">3</span>
+              <span class="card-label-lg">Parsed Days (<span id="parsedDaysCount">0</span>)</span>
+            </div>
+            <button type="button" class="btn-publish-all" id="btnPublishAllBatch" disabled>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              <span>Publish to Kairogram</span>
+            </button>
+          </div>
+
+          <div class="mobile-parsed-list" id="parsedListContainer">
+            <div class="mobile-empty-state">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <p>Paste text above and tap <strong>Parse & Preview Days</strong> to see them here.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= TAB 2: SINGLE FORM ENTRY ================= -->
+      <section class="mobile-tab-view" id="tabSingleForm">
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <h2 class="card-label-lg">Single Day Devotional Entry</h2>
+            <button type="button" class="btn-publish-all" id="btnSaveSingleDevotional">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path></svg>
+              <span>Publish</span>
+            </button>
+          </div>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Church</label>
+            <select class="mobile-select-lg" id="formChurch">
+              <option value="rccg">RCCG (Redeemed Christian Church of God)</option>
+              <option value="dclm">Deeper Life (DCLM)</option>
+              <option value="mfm">MFM (Mountain of Fire & Miracles)</option>
+              <option value="christ_embassy">Christ Embassy (Rhapsody)</option>
+              <option value="odm">Our Daily Manna (ODM)</option>
+              <option value="winners">Winners Chapel (Living Faith)</option>
+              <option value="dunamis">Dunamis International</option>
             </select>
           </div>
-        </div>
 
-        <div class="batch-grid-layout">
-          <!-- Left Input Column -->
-          <div class="batch-input-card">
-            <div class="card-header-between">
-              <span class="card-kicker">PASTE TEXT / FORMATTED EDITIONS</span>
-              <div class="template-chips">
-                <button type="button" class="chip-btn" id="btnPasteSampleOpenHeavens">Sample Open Heavens</button>
-                <button type="button" class="chip-btn" id="btnPasteSampleDclm">Sample Daily Manna</button>
-                <button type="button" class="chip-btn" id="btnClearBatchInput">Clear</button>
-              </div>
-            </div>
-
-            <textarea class="batch-textarea" id="batchTextInput" placeholder="Paste multiple days of devotionals here...
-
-Example:
-DATE: 2026-09-20
-TOPIC: Walking in Supernatural Wisdom
-MEMORY VERSE: Proverbs 3:5 - Trust in the LORD with all thine heart...
-BIBLE READING: Proverbs 3:1-12
-MESSAGE:
-Divine wisdom is not academic intellectualism...
-When you surrender your plans to God, He directs your paths...
-PRAYER POINT: Father, endow me with the spirit of wisdom and revelation.
-
-DATE: 2026-09-21
-TOPIC: Overcoming Obstacles
-..."></textarea>
-
-            <div class="batch-actions-bar">
-              <button type="button" class="cms-btn cms-btn-primary" id="btnParseBatch">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                <span>Parse & Analyze Days</span>
-              </button>
-              <span class="parser-hint" id="parserStatusHint">Ready to parse text</span>
-            </div>
+          <div class="mobile-field-group">
+            <label class="field-label">Publication / Manual</label>
+            <select class="mobile-select-lg" id="formManual">
+              <option value="open_heavens">Open Heavens Daily Devotional</option>
+              <option value="dclm">Daily Manna</option>
+              <option value="mfm">Mountain Top Life</option>
+              <option value="rhapsody">Rhapsody of Realities</option>
+              <option value="odm">Our Daily Manna</option>
+              <option value="rccg_ss_adult">RCCG Sunday School (Adult Students)</option>
+              <option value="rccg_ss_teacher">RCCG Sunday School (Adult Teachers)</option>
+              <option value="rccg_yaya_student">RCCG YAYA Sunday School (Students)</option>
+            </select>
           </div>
 
-          <!-- Right Parsed Preview Column -->
-          <div class="batch-preview-card">
-            <div class="card-header-between">
-              <span class="card-kicker">PARSED DAYS PREVIEW (<span id="parsedDaysCount">0</span>)</span>
-              <button type="button" class="cms-btn cms-btn-accent" id="btnPublishAllBatch" disabled>
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                <span>Publish All to Cloud API</span>
-              </button>
-            </div>
-
-            <div class="parsed-list" id="parsedListContainer">
-              <div class="empty-hint-box">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                <p>No days parsed yet. Paste multi-day devotional text on the left and click <strong>Parse & Analyze Days</strong>.</p>
-              </div>
-            </div>
+          <div class="mobile-field-group">
+            <label class="field-label">Date</label>
+            <input type="date" class="mobile-input-lg" id="formDate" value="2026-09-20">
           </div>
-        </div>
-      </section>
 
-      <!-- ================= TAB 2: SINGLE DAY FORM EDITOR ================= -->
-      <section class="cms-view" id="tabSingleForm">
-        <div class="view-header-row">
-          <div>
-            <h2 class="view-title">Single Day Devotional Form Editor</h2>
-            <p class="view-subtitle">Enter or fine-tune an individual devotion or Sunday School manual entry.</p>
+          <div class="mobile-field-group">
+            <label class="field-label">Topic / Title</label>
+            <input type="text" class="mobile-input-lg" id="formTopic" placeholder="e.g. The Wonders of Divine Favor">
           </div>
-          <button type="button" class="cms-btn cms-btn-primary" id="btnSaveSingleDevotional">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path></svg>
-            <span>Publish Devotional</span>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Author</label>
+            <input type="text" class="mobile-input-lg" id="formAuthor" placeholder="e.g. Pastor E.A. Adeboye" value="Pastor E.A. Adeboye">
+          </div>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Memory Verse Reference</label>
+            <input type="text" class="mobile-input-lg" id="formMemoryRef" placeholder="e.g. Psalm 102:13">
+          </div>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Bible Reading Passage</label>
+            <input type="text" class="mobile-input-lg" id="formReadingRef" placeholder="e.g. Esther 2:15-18">
+          </div>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Memory Verse Quotation</label>
+            <textarea class="mobile-textarea sm" id="formMemoryText" placeholder="Verse text..."></textarea>
+          </div>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Message (Empty line between paragraphs)</label>
+            <textarea class="mobile-textarea md" id="formMessageText" placeholder="Devotional message content..."></textarea>
+          </div>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Prayer Points</label>
+            <textarea class="mobile-textarea sm" id="formPrayerPoints" placeholder="Prayer point..."></textarea>
+          </div>
+
+          <div class="mobile-field-group">
+            <label class="field-label">Hymn / Confession</label>
+            <input type="text" class="mobile-input-lg" id="formHymnOrConfession" placeholder="Hymn or declaration...">
+          </div>
+
+          <button type="button" class="btn-mobile-primary" id="btnSaveSingleDevotionalBottom" style="margin-top:10px;">
+            <span>Publish Devotional to Kairogram</span>
           </button>
         </div>
-
-        <div class="form-container-card">
-          <div class="form-row-3">
-            <div class="form-field">
-              <label>Church Ministry</label>
-              <select class="cms-input" id="formChurch">
-                <option value="rccg">RCCG (Redeemed Christian Church of God)</option>
-                <option value="dclm">Deeper Life (DCLM)</option>
-                <option value="mfm">MFM (Mountain of Fire & Miracles)</option>
-                <option value="christ_embassy">Christ Embassy (Believers' LoveWorld)</option>
-                <option value="odm">Our Daily Manna (ODM)</option>
-                <option value="winners">Winners Chapel (Living Faith)</option>
-                <option value="dunamis">Dunamis International</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label>Publication Manual</label>
-              <select class="cms-input" id="formManual">
-                <option value="open_heavens">Open Heavens Daily Devotional</option>
-                <option value="dclm">Daily Manna</option>
-                <option value="mfm">Mountain Top Life</option>
-                <option value="rhapsody">Rhapsody of Realities</option>
-                <option value="odm">Our Daily Manna</option>
-                <option value="rccg_ss_adult">RCCG Sunday School (Adult Students)</option>
-                <option value="rccg_ss_teacher">RCCG Sunday School (Adult Teachers)</option>
-                <option value="rccg_yaya_student">RCCG YAYA Sunday School (Students)</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label>Publication Date</label>
-              <input type="date" class="cms-input" id="formDate" value="2026-09-20">
-            </div>
-          </div>
-
-          <div class="form-row-2">
-            <div class="form-field">
-              <label>Topic / Title</label>
-              <input type="text" class="cms-input" id="formTopic" placeholder="e.g. Walking in Divine Alignment">
-            </div>
-            <div class="form-field">
-              <label>Author / Speaker</label>
-              <input type="text" class="cms-input" id="formAuthor" placeholder="e.g. Pastor E.A. Adeboye" value="Pastor E.A. Adeboye">
-            </div>
-          </div>
-
-          <div class="form-row-2">
-            <div class="form-field">
-              <label>Memory / Key Verse Reference</label>
-              <input type="text" class="cms-input" id="formMemoryRef" placeholder="e.g. Psalm 138:8">
-            </div>
-            <div class="form-field">
-              <label>Bible Reading Reference</label>
-              <input type="text" class="cms-input" id="formReadingRef" placeholder="e.g. 2 Kings 13:20-21">
-            </div>
-          </div>
-
-          <div class="form-field">
-            <label>Memory Verse Text</label>
-            <textarea class="cms-input" id="formMemoryText" rows="2" placeholder="The LORD will perfect that which concerneth me: thy mercy, O LORD, endureth for ever: forsake not the works of thine own hands."></textarea>
-          </div>
-
-          <div class="form-field">
-            <label>Message Paragraphs (Separate each paragraph with an empty line)</label>
-            <textarea class="cms-input" id="formMessageText" rows="6" placeholder="Enter message paragraphs here..."></textarea>
-          </div>
-
-          <div class="form-row-2">
-            <div class="form-field">
-              <label>Prayer Points / Reflections (1 per line)</label>
-              <textarea class="cms-input" id="formPrayerPoints" rows="3" placeholder="Father, align every step of my journey with Your sovereign will."></textarea>
-            </div>
-            <div class="form-field">
-              <label>Hymn / Confession / Motivational Quote</label>
-              <textarea class="cms-input" id="formHymnOrConfession" rows="3" placeholder="Hymn 26: Pass Me Not, O Gentle Saviour"></textarea>
-            </div>
-          </div>
-        </div>
       </section>
 
-      <!-- ================= TAB 3: STORED LIBRARY & EXPLORER ================= -->
-      <section class="cms-view" id="tabLibrary">
-        <div class="view-header-row">
-          <div>
-            <h2 class="view-title">Active Cloud Devotionals Catalog</h2>
-            <p class="view-subtitle">All devotionals and manuals currently hosted in this cloud endpoint and served to Kairogram.</p>
+      <!-- ================= TAB 3: LIBRARY ================= -->
+      <section class="mobile-tab-view" id="tabLibrary">
+        <div class="mobile-card">
+          <div class="card-title-row">
+            <h2 class="card-label-lg">Published Editions</h2>
+            <span class="card-sub-count"><span id="libraryCountBadge">0</span> stored</span>
           </div>
-          <div class="filter-pills-row" id="libraryFilterPills">
+
+          <!-- Quick Filter Horizontal Pills -->
+          <div class="mobile-filter-pills" id="libraryFilterPills">
             <button type="button" class="filter-pill active" data-filter="all">All</button>
             <button type="button" class="filter-pill" data-filter="rccg">RCCG</button>
             <button type="button" class="filter-pill" data-filter="dclm">Deeper Life</button>
             <button type="button" class="filter-pill" data-filter="mfm">MFM</button>
-            <button type="button" class="filter-pill" data-filter="christ_embassy">Christ Embassy</button>
+            <button type="button" class="filter-pill" data-filter="christ_embassy">Rhapsody</button>
             <button type="button" class="filter-pill" data-filter="odm">ODM</button>
           </div>
         </div>
 
-        <div class="library-grid" id="libraryGrid">
-          <!-- Dynamically populated with active cards -->
-        </div>
-      </section>
-
-      <!-- ================= TAB 4: KAIROGRAM APP CONNECTION & TEST ================= -->
-      <section class="cms-view" id="tabAppConnection">
-        <div class="view-header-row">
-          <div>
-            <h2 class="view-title">Connect Kairogram to Your Hosted Vercel API</h2>
-            <p class="view-subtitle">How to link your Kairogram mobile app to pull live updates whenever you post new devotions.</p>
-          </div>
-        </div>
-
-        <div class="connection-layout">
-          <!-- Card 1: API Endpoint Info -->
-          <div class="conn-card">
-            <span class="card-kicker">LIVE API ENDPOINTS</span>
-            <h3 class="conn-title">Your Vercel Public Feed URL</h3>
-            <p class="conn-desc">Once you deploy this project to Vercel, your live endpoint URL is:</p>
-            
-            <div class="endpoint-copy-box">
-              <code id="displayEndpointUrl">https://&lt;your-project&gt;.vercel.app/api/devotionals/latest</code>
-              <button type="button" class="cms-btn cms-btn-outline sm" id="btnCopyEndpoint">Copy URL</button>
-            </div>
-
-            <div class="setup-steps-list">
-              <div class="step-item">
-                <span class="step-badge">1</span>
-                <div>
-                  <strong>Deploy to Vercel:</strong> Push this folder to your GitHub repo and import it into Vercel (or run <code>npx vercel</code>).
-                </div>
-              </div>
-              <div class="step-item">
-                <span class="step-badge">2</span>
-                <div>
-                  <strong>Open Kairogram App:</strong> Go to the <strong>Settings</strong> tab, locate <strong>Devotionals Cloud Sync</strong>.
-                </div>
-              </div>
-              <div class="step-item">
-                <span class="step-badge">3</span>
-                <div>
-                  <strong>Paste your Vercel URL:</strong> Tap <strong>Save & Sync</strong>. All posted Open Heavens, DCLM, and Sunday School editions immediately appear in Kairogram!
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: Interactive Live Tester -->
-          <div class="conn-card">
-            <span class="card-kicker">API DIAGNOSTICS</span>
-            <h3 class="conn-title">Live API Response Tester</h3>
-            <p class="conn-desc">Test the live server response right now:</p>
-
-            <div class="test-controls-row">
-              <button type="button" class="cms-btn cms-btn-primary" id="btnTestApi">Run API Test (GET /api/devotionals/latest)</button>
-              <span class="conn-status" id="testApiStatus">Ready to test</span>
-            </div>
-
-            <pre class="json-preview-box" id="jsonPreviewBox">{ "status": "Click 'Run API Test' above to inspect live JSON payload" }</pre>
-          </div>
+        <div class="mobile-library-list" id="libraryGrid">
+          <!-- Dynamically populated with mobile cards -->
         </div>
       </section>
 
     </main>
 
-    <!-- Toast Notification -->
-    <div class="cms-toast hidden" id="cmsToast">Notification message</div>
+    <!-- Mobile Toast -->
+    <div class="mobile-toast hidden" id="cmsToast">Notification message</div>
   </div>
 
   <script src="app.js"></script>
