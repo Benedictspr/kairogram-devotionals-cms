@@ -95,13 +95,13 @@
             <option value="rccg_open_heavens">RCCG • Open Heavens (Pastor Adeboye)</option>
             <option value="dclm_dclm">Deeper Life • Daily Manna (Pastor Kumuyi)</option>
             <option value="mfm_mfm">MFM • Mountain Top Life (Dr. Olukoya)</option>
-            <option value="christ_embassy_rhapsody">Christ Embassy • Rhapsody of Realities</option>
+            <option value="christ_embassy_rhapsody">Christ Embassy • Rhapsody of Realities (Pastor Chris)</option>
             <option value="odm_odm">Our Daily Manna • ODM (Bishop Chris)</option>
-            <option value="winners_winners">Winners Chapel • Word of Faith</option>
             <option value="dunamis_seeds">Dunamis • Seeds of Destiny (Dr. Enenche)</option>
+            <option value="winners_winners">Winners Chapel • Word of Faith (Bishop Oyedepo)</option>
             <option value="rccg_rccg_ss_adult">RCCG Sunday School • Adult Students</option>
             <option value="rccg_rccg_ss_teacher">RCCG Sunday School • Teachers Manual</option>
-            <option value="rccg_rccg_yaya_student">RCCG YAYA Sunday School • Students</option>
+            <option value="rccg_rccg_yaya_student">RCCG YAYA Sunday School • Youths</option>
           </select>
         </div>
 
@@ -118,18 +118,23 @@
             </button>
           </div>
 
-          <textarea class="mobile-textarea" id="batchTextInput" placeholder="Paste 1 day, 7 days, or an entire month of devotions here...
+          <textarea class="mobile-textarea" id="batchTextInput" placeholder="Paste 1 day, 7 days, or a whole month here...
 
-Smart parser automatically extracts:
-• Date & Topic
-• Memory Verse & Text
-• Bible Reading Reference
-• Message paragraphs & Prayers"></textarea>
+Real-life headings auto-detected:
+• RCCG: MEMORISE, BIBLE READING, PRAYER POINT
+• DCLM: KEY VERSE, TEXT, THOUGHT FOR THE DAY
+• MFM: FIRE SCRIPTURE, MOTIVATIONAL QUOTE, MORNING/EVENING PRAYERS
+• Rhapsody: OPENING SCRIPTURE, CONFESSION, FURTHER STUDY
+• ODM: DEVOTIONAL CAPSULE, BASIC SCRIPTURE, PRAYER BULLETS
+• Sunday School: LESSON, OUTLINES, DISCUSSION, ASSIGNMENT"></textarea>
 
           <!-- Quick Template Helper Chips -->
-          <div class="quick-helpers-row">
-            <button type="button" class="btn-micro-chip" id="btnPasteSampleOpenHeavens">Open Heavens Sample</button>
-            <button type="button" class="btn-micro-chip" id="btnPasteSampleDclm">Daily Manna Sample</button>
+          <div class="quick-helpers-row" style="flex-wrap:wrap;gap:6px;">
+            <button type="button" class="btn-micro-chip" id="btnPasteSampleOpenHeavens">Open Heavens</button>
+            <button type="button" class="btn-micro-chip" id="btnPasteSampleDclm">Daily Manna</button>
+            <button type="button" class="btn-micro-chip" id="btnPasteSampleMfm">MFM Mountain Top</button>
+            <button type="button" class="btn-micro-chip" id="btnPasteSampleRhapsody">Rhapsody</button>
+            <button type="button" class="btn-micro-chip" id="btnPasteSampleSundaySchool">Sunday School</button>
             <button type="button" class="btn-micro-chip text-muted" id="btnClearBatchInput">Clear</button>
           </div>
 
@@ -165,11 +170,11 @@ Smart parser automatically extracts:
 
       </section>
 
-      <!-- ================= TAB 2: SINGLE FORM ENTRY ================= -->
+      <!-- ================= TAB 2: ADAPTIVE FORM ENTRY ================= -->
       <section class="mobile-tab-view" id="tabSingleForm">
         <div class="mobile-card">
           <div class="card-title-row">
-            <h2 class="card-label-lg">Single Day Devotional Entry</h2>
+            <h2 class="card-label-lg" id="formHeaderTitle">Devotional Entry</h2>
             <button type="button" class="btn-publish-all" id="btnSaveSingleDevotional">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path></svg>
               <span>Publish</span>
@@ -184,8 +189,8 @@ Smart parser automatically extracts:
               <option value="mfm">MFM (Mountain of Fire & Miracles)</option>
               <option value="christ_embassy">Christ Embassy (Rhapsody)</option>
               <option value="odm">Our Daily Manna (ODM)</option>
-              <option value="winners">Winners Chapel (Living Faith)</option>
               <option value="dunamis">Dunamis International</option>
+              <option value="winners">Winners Chapel (Living Faith)</option>
             </select>
           </div>
 
@@ -197,10 +202,18 @@ Smart parser automatically extracts:
               <option value="mfm">Mountain Top Life</option>
               <option value="rhapsody">Rhapsody of Realities</option>
               <option value="odm">Our Daily Manna</option>
+              <option value="seeds">Seeds of Destiny</option>
               <option value="rccg_ss_adult">RCCG Sunday School (Adult Students)</option>
               <option value="rccg_ss_teacher">RCCG Sunday School (Adult Teachers)</option>
               <option value="rccg_yaya_student">RCCG YAYA Sunday School (Students)</option>
+              <option value="rccg_yaya_teacher">RCCG YAYA Sunday School (Teachers Guide)</option>
             </select>
+          </div>
+
+          <!-- Sunday School Lesson Number (Shown for SS) -->
+          <div class="mobile-field-group hidden" id="groupSsLessonNum">
+            <label class="field-label">Lesson Number</label>
+            <input type="number" class="mobile-input-lg" id="formLessonNum" value="3" placeholder="e.g. 3">
           </div>
 
           <div class="mobile-field-group">
@@ -214,38 +227,135 @@ Smart parser automatically extracts:
           </div>
 
           <div class="mobile-field-group">
-            <label class="field-label">Author</label>
+            <label class="field-label">Author / Leader</label>
             <input type="text" class="mobile-input-lg" id="formAuthor" placeholder="e.g. Pastor E.A. Adeboye" value="Pastor E.A. Adeboye">
           </div>
 
+          <!-- Dynamic Memory / Key Verse Ref -->
           <div class="mobile-field-group">
-            <label class="field-label">Memory Verse Reference</label>
+            <label class="field-label" id="lblFormMemoryRef">Memory Verse Reference</label>
             <input type="text" class="mobile-input-lg" id="formMemoryRef" placeholder="e.g. Psalm 102:13">
           </div>
 
+          <!-- Dynamic Reading / Fire Scripture / Text Ref -->
           <div class="mobile-field-group">
-            <label class="field-label">Bible Reading Passage</label>
+            <label class="field-label" id="lblFormReadingRef">Bible Reading Passage</label>
             <input type="text" class="mobile-input-lg" id="formReadingRef" placeholder="e.g. Esther 2:15-18">
           </div>
 
           <div class="mobile-field-group">
-            <label class="field-label">Memory Verse Quotation</label>
-            <textarea class="mobile-textarea sm" id="formMemoryText" placeholder="Verse text..."></textarea>
+            <label class="field-label" id="lblFormMemoryText">Memory Verse Quotation</label>
+            <textarea class="mobile-textarea sm" id="formMemoryText" placeholder="Verse quotation text..."></textarea>
           </div>
 
-          <div class="mobile-field-group">
-            <label class="field-label">Message (Empty line between paragraphs)</label>
+          <!-- MFM Motivational Quote -->
+          <div class="mobile-field-group hidden" id="groupMotivationalQuote">
+            <label class="field-label">Motivational Quote (MFM)</label>
+            <input type="text" class="mobile-input-lg" id="formMotivationalQuote" placeholder="e.g. A prayerless Christian is a powerless believer.">
+          </div>
+
+          <!-- MFM / ODM / Dunamis Prophetic Word -->
+          <div class="mobile-field-group hidden" id="groupPropheticWord">
+            <label class="field-label">Prophetic Word / Declaration</label>
+            <input type="text" class="mobile-input-lg" id="formPropheticWord" placeholder="e.g. The Lord shall fight for you today!">
+          </div>
+
+          <!-- ODM Devotional Capsule -->
+          <div class="mobile-field-group hidden" id="groupDevotionalCapsule">
+            <label class="field-label">Devotional Capsule (ODM)</label>
+            <textarea class="mobile-textarea sm" id="formDevotionalCapsule" placeholder="ODM inspirational opening capsule..."></textarea>
+          </div>
+
+          <!-- Sunday School Lesson Introduction -->
+          <div class="mobile-field-group hidden" id="groupSsIntro">
+            <label class="field-label">Lesson Introduction (Sunday School)</label>
+            <textarea class="mobile-textarea sm" id="formSsIntro" placeholder="Class introduction..."></textarea>
+          </div>
+
+          <!-- Teacher's Aim & Objectives -->
+          <div class="mobile-field-group hidden" id="groupSsTeacher">
+            <label class="field-label">Teacher's Lesson Aim & Objectives</label>
+            <textarea class="mobile-textarea sm" id="formSsTeacherAim" placeholder="Teaching aim and objectives..."></textarea>
+          </div>
+
+          <!-- YAYA Youth Focus -->
+          <div class="mobile-field-group hidden" id="groupSsYouthFocus">
+            <label class="field-label">Youth Focus / Relevance</label>
+            <input type="text" class="mobile-input-lg" id="formSsYouthFocus" placeholder="Youth relevance note...">
+          </div>
+
+          <!-- Message Content / Outlines -->
+          <div class="mobile-field-group" id="groupMessageBody">
+            <label class="field-label" id="lblFormMessageText">Devotional Message (Empty line between paragraphs)</label>
             <textarea class="mobile-textarea md" id="formMessageText" placeholder="Devotional message content..."></textarea>
           </div>
 
-          <div class="mobile-field-group">
-            <label class="field-label">Prayer Points</label>
-            <textarea class="mobile-textarea sm" id="formPrayerPoints" placeholder="Prayer point..."></textarea>
+          <!-- Sunday School Outlines 1 & 2 -->
+          <div class="mobile-field-group hidden" id="groupSsOutlines">
+            <label class="field-label">Lesson Outline 1</label>
+            <textarea class="mobile-textarea sm" id="formSsOutline1" placeholder="Title and bullet points for outline 1..."></textarea>
+            <label class="field-label" style="margin-top:8px;">Lesson Outline 2</label>
+            <textarea class="mobile-textarea sm" id="formSsOutline2" placeholder="Title and bullet points for outline 2..."></textarea>
           </div>
 
-          <div class="mobile-field-group">
-            <label class="field-label">Hymn / Confession</label>
-            <input type="text" class="mobile-input-lg" id="formHymnOrConfession" placeholder="Hymn or declaration...">
+          <!-- Sunday School Class Discussion / Questions -->
+          <div class="mobile-field-group hidden" id="groupSsDiscussion">
+            <label class="field-label">Class Discussion / Questions</label>
+            <textarea class="mobile-textarea sm" id="formSsDiscussion" placeholder="Discussion questions for students..."></textarea>
+          </div>
+
+          <!-- DCLM Thought for the Day -->
+          <div class="mobile-field-group hidden" id="groupThoughtForTheDay">
+            <label class="field-label">Thought for the Day (Daily Manna)</label>
+            <input type="text" class="mobile-input-lg" id="formThoughtForTheDay" placeholder="e.g. God's standard of holiness is non-negotiable.">
+          </div>
+
+          <!-- Rhapsody Confession -->
+          <div class="mobile-field-group hidden" id="groupConfession">
+            <label class="field-label">Confession / Prayer (Rhapsody of Realities)</label>
+            <textarea class="mobile-textarea sm" id="formConfession" placeholder="Faith confession or declaration..."></textarea>
+          </div>
+
+          <!-- Rhapsody Further Study -->
+          <div class="mobile-field-group hidden" id="groupFurtherStudy">
+            <label class="field-label">Further Study (Scripture References)</label>
+            <input type="text" class="mobile-input-lg" id="formFurtherStudy" placeholder="e.g. Romans 8:1-2; Ephesians 1:3; Colossians 1:27">
+          </div>
+
+          <!-- MFM Morning Prayers -->
+          <div class="mobile-field-group hidden" id="groupMorningPrayers">
+            <label class="field-label">Morning Prayers (MFM Warfare)</label>
+            <textarea class="mobile-textarea sm" id="formMorningPrayers" placeholder="Morning prayer points (one per line)..."></textarea>
+          </div>
+
+          <!-- MFM Evening Prayers -->
+          <div class="mobile-field-group hidden" id="groupEveningPrayers">
+            <label class="field-label">Evening Prayers (MFM Warfare)</label>
+            <textarea class="mobile-textarea sm" id="formEveningPrayers" placeholder="Evening prayer points (one per line)..."></textarea>
+          </div>
+
+          <!-- General Prayer Points / Bullets -->
+          <div class="mobile-field-group" id="groupPrayerPoints">
+            <label class="field-label" id="lblFormPrayerPoints">Prayer Points</label>
+            <textarea class="mobile-textarea sm" id="formPrayerPoints" placeholder="Prayer points (one per line)..."></textarea>
+          </div>
+
+          <!-- Sunday School Summary & Assignment -->
+          <div class="mobile-field-group hidden" id="groupSsSummaryAssignment">
+            <label class="field-label">Lesson Summary & Conclusion</label>
+            <textarea class="mobile-textarea sm" id="formSsSummary" placeholder="Summary and conclusion..."></textarea>
+            <label class="field-label" style="margin-top:8px;">Weekly Assignment</label>
+            <input type="text" class="mobile-input-lg" id="formSsAssignment" placeholder="e.g. Write out three ways to cultivate personal holiness.">
+          </div>
+
+          <div class="mobile-field-group" id="groupHymn">
+            <label class="field-label" id="lblFormHymn">Hymn / Lyrics</label>
+            <input type="text" class="mobile-input-lg" id="formHymnOrConfession" placeholder="Hymn title or lyrics...">
+          </div>
+
+          <div class="mobile-field-group" id="groupBibleInOneYear">
+            <label class="field-label" id="lblFormBibleInOneYear">Bible in One Year / Reading Plan</label>
+            <input type="text" class="mobile-input-lg" id="formBibleInOneYear" placeholder="e.g. 1 Peter 1-3; Psalm 119">
           </div>
 
           <button type="button" class="btn-mobile-primary" id="btnSaveSingleDevotionalBottom" style="margin-top:10px;">

@@ -208,15 +208,27 @@ module.exports = async (req, res) => {
           topic: item.topic || "Walking in Divine Glory",
           memoryVerseRef: item.memoryVerseRef || "",
           memoryVerseText: item.memoryVerseText || "",
-          bibleReadingRef: item.bibleReadingRef || item.readingRef || "",
+          bibleReadingRef: item.bibleReadingRef || item.readingRef || item.fireScriptureRef || item.textRef || item.basicScriptureRef || "",
+          fireScriptureRef: item.fireScriptureRef || (church === 'mfm' ? (item.bibleReadingRef || item.readingRef) : ""),
+          textRef: item.textRef || (church === 'dclm' ? (item.bibleReadingRef || item.readingRef) : ""),
+          basicScriptureRef: item.basicScriptureRef || (church === 'odm' ? (item.bibleReadingRef || item.readingRef) : ""),
           message: Array.isArray(item.message) ? item.message : (item.message ? [item.message] : []),
           prayerPoints: Array.isArray(item.prayerPoints) ? item.prayerPoints : (item.prayerPoints ? [item.prayerPoints] : []),
           hymn: item.hymn || "",
           thoughtForTheDay: item.thoughtForTheDay || "",
           motivationalQuote: item.motivationalQuote || "",
           confession: item.confession || "",
-          propheticWord: item.propheticWord || "",
+          propheticWord: item.propheticWord || item.propheticDeclaration || "",
+          propheticDeclaration: item.propheticDeclaration || item.propheticWord || "",
           devotionalCapsule: item.devotionalCapsule || "",
+          morningPrayers: Array.isArray(item.morningPrayers) ? item.morningPrayers : (item.morningPrayers ? [item.morningPrayers] : []),
+          eveningPrayers: Array.isArray(item.eveningPrayers) ? item.eveningPrayers : (item.eveningPrayers ? [item.eveningPrayers] : []),
+          furtherStudy: Array.isArray(item.furtherStudy) ? item.furtherStudy : (item.furtherStudy ? [item.furtherStudy] : []),
+          oneYearReading: item.oneYearReading || item.bibleInOneYear || "",
+          twoYearReading: item.twoYearReading || "",
+          bibleInOneYear: item.bibleInOneYear || item.oneYearReading || "",
+          rememberThis: item.rememberThis || "",
+          assignments: item.assignments || item.assignment || "",
           readTime: item.readTime || "4 min read",
           source: item.source || "Kairogram Devotionals Cloud CMS",
           updatedAt: new Date().toISOString()
@@ -232,7 +244,10 @@ module.exports = async (req, res) => {
           entryPayload.summary = item.summary || "";
           entryPayload.assignment = item.assignment || "";
           entryPayload.teachingAim = item.teachingAim || "";
+          entryPayload.teacherObjectives = Array.isArray(item.teacherObjectives) ? item.teacherObjectives : (item.teacherObjectives ? [item.teacherObjectives] : []);
           entryPayload.youthFocus = item.youthFocus || "";
+          entryPayload.classActivities = item.classActivities || "";
+          entryPayload.markingScheme = item.markingScheme || "";
 
           // Also push to sunday_school_lessons array
           const existingIdx = store.sunday_school_lessons.findIndex(l => 

@@ -1,4 +1,4 @@
-// ================= KAIROGRAM DEVOTIONALS CLOUD STUDIO (MOBILE & SIMPLE) =================
+// ================= KAIROGRAM DEVOTIONALS CLOUD STUDIO (MOBILE & ADAPTABLE) =================
 (function() {
   let parsedBatchItems = [];
   let fullDatabaseCache = null;
@@ -21,7 +21,8 @@
   const btnAutoFetchUpcoming = document.getElementById('btnAutoFetchUpcoming');
   const cmsToast = document.getElementById('cmsToast');
 
-  // Single Day Form elements
+  // Single Day Form elements & Labels
+  const formHeaderTitle = document.getElementById('formHeaderTitle');
   const formChurch = document.getElementById('formChurch');
   const formManual = document.getElementById('formManual');
   const formDate = document.getElementById('formDate');
@@ -33,12 +34,63 @@
   const formMessageText = document.getElementById('formMessageText');
   const formPrayerPoints = document.getElementById('formPrayerPoints');
   const formHymnOrConfession = document.getElementById('formHymnOrConfession');
+  const formBibleInOneYear = document.getElementById('formBibleInOneYear');
   const btnSaveSingleDevotional = document.getElementById('btnSaveSingleDevotional');
   const btnSaveSingleDevotionalBottom = document.getElementById('btnSaveSingleDevotionalBottom');
+
+  // Dynamic Label Elements
+  const lblFormMemoryRef = document.getElementById('lblFormMemoryRef');
+  const lblFormReadingRef = document.getElementById('lblFormReadingRef');
+  const lblFormMemoryText = document.getElementById('lblFormMemoryText');
+  const lblFormMessageText = document.getElementById('lblFormMessageText');
+  const lblFormPrayerPoints = document.getElementById('lblFormPrayerPoints');
+  const lblFormHymn = document.getElementById('lblFormHymn');
+  const lblFormBibleInOneYear = document.getElementById('lblFormBibleInOneYear');
+
+  // Church-Adaptive Group Elements
+  const groupMotivationalQuote = document.getElementById('groupMotivationalQuote');
+  const formMotivationalQuote = document.getElementById('formMotivationalQuote');
+  const groupPropheticWord = document.getElementById('groupPropheticWord');
+  const formPropheticWord = document.getElementById('formPropheticWord');
+  const groupDevotionalCapsule = document.getElementById('groupDevotionalCapsule');
+  const formDevotionalCapsule = document.getElementById('formDevotionalCapsule');
+  const groupThoughtForTheDay = document.getElementById('groupThoughtForTheDay');
+  const formThoughtForTheDay = document.getElementById('formThoughtForTheDay');
+  const groupConfession = document.getElementById('groupConfession');
+  const formConfession = document.getElementById('formConfession');
+  const groupFurtherStudy = document.getElementById('groupFurtherStudy');
+  const formFurtherStudy = document.getElementById('formFurtherStudy');
+  const groupMorningPrayers = document.getElementById('groupMorningPrayers');
+  const formMorningPrayers = document.getElementById('formMorningPrayers');
+  const groupEveningPrayers = document.getElementById('groupEveningPrayers');
+  const formEveningPrayers = document.getElementById('formEveningPrayers');
+  const groupPrayerPoints = document.getElementById('groupPrayerPoints');
+  const groupMessageBody = document.getElementById('groupMessageBody');
+
+  // Sunday School Specific Elements
+  const groupSsLessonNum = document.getElementById('groupSsLessonNum');
+  const formLessonNum = document.getElementById('formLessonNum');
+  const groupSsIntro = document.getElementById('groupSsIntro');
+  const formSsIntro = document.getElementById('formSsIntro');
+  const groupSsTeacher = document.getElementById('groupSsTeacher');
+  const formSsTeacherAim = document.getElementById('formSsTeacherAim');
+  const groupSsYouthFocus = document.getElementById('groupSsYouthFocus');
+  const formSsYouthFocus = document.getElementById('formSsYouthFocus');
+  const groupSsOutlines = document.getElementById('groupSsOutlines');
+  const formSsOutline1 = document.getElementById('formSsOutline1');
+  const formSsOutline2 = document.getElementById('formSsOutline2');
+  const groupSsDiscussion = document.getElementById('groupSsDiscussion');
+  const formSsDiscussion = document.getElementById('formSsDiscussion');
+  const groupSsSummaryAssignment = document.getElementById('groupSsSummaryAssignment');
+  const formSsSummary = document.getElementById('formSsSummary');
+  const formSsAssignment = document.getElementById('formSsAssignment');
 
   // Sample templates
   const btnPasteSampleOpenHeavens = document.getElementById('btnPasteSampleOpenHeavens');
   const btnPasteSampleDclm = document.getElementById('btnPasteSampleDclm');
+  const btnPasteSampleMfm = document.getElementById('btnPasteSampleMfm');
+  const btnPasteSampleRhapsody = document.getElementById('btnPasteSampleRhapsody');
+  const btnPasteSampleSundaySchool = document.getElementById('btnPasteSampleSundaySchool');
   const btnClearBatchInput = document.getElementById('btnClearBatchInput');
 
   // 1. Mobile Tab Switching
@@ -67,7 +119,169 @@
     }, 3000);
   }
 
-  // 3. One-Tap Clipboard Paste (Phone-friendly)
+  // 3. Form Church Adaptability Engine
+  function adaptFormToChurch() {
+    const ch = formChurch.value;
+    const man = formManual.value;
+    const isSs = man.startsWith('rccg_ss') || man.startsWith('rccg_yaya');
+    const isTeacher = man.includes('teacher');
+    const isYaya = man.includes('yaya');
+
+    // Default hide all special sections
+    if (groupMotivationalQuote) groupMotivationalQuote.classList.add('hidden');
+    if (groupPropheticWord) groupPropheticWord.classList.add('hidden');
+    if (groupDevotionalCapsule) groupDevotionalCapsule.classList.add('hidden');
+    if (groupThoughtForTheDay) groupThoughtForTheDay.classList.add('hidden');
+    if (groupConfession) groupConfession.classList.add('hidden');
+    if (groupFurtherStudy) groupFurtherStudy.classList.add('hidden');
+    if (groupMorningPrayers) groupMorningPrayers.classList.add('hidden');
+    if (groupEveningPrayers) groupEveningPrayers.classList.add('hidden');
+    if (groupSsLessonNum) groupSsLessonNum.classList.add('hidden');
+    if (groupSsIntro) groupSsIntro.classList.add('hidden');
+    if (groupSsTeacher) groupSsTeacher.classList.add('hidden');
+    if (groupSsYouthFocus) groupSsYouthFocus.classList.add('hidden');
+    if (groupSsOutlines) groupSsOutlines.classList.add('hidden');
+    if (groupSsDiscussion) groupSsDiscussion.classList.add('hidden');
+    if (groupSsSummaryAssignment) groupSsSummaryAssignment.classList.add('hidden');
+    if (groupPrayerPoints) groupPrayerPoints.classList.remove('hidden');
+    if (groupMessageBody) groupMessageBody.classList.remove('hidden');
+
+    if (isSs) {
+      if (formHeaderTitle) formHeaderTitle.textContent = "Sunday School Lesson Entry";
+      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Memory Verse Reference";
+      if (lblFormReadingRef) lblFormReadingRef.textContent = "Bible Passage";
+      if (lblFormMemoryText) lblFormMemoryText.textContent = "Memory Verse Quotation";
+      if (lblFormMessageText) lblFormMessageText.textContent = "Teacher / Expository Background";
+      if (lblFormHymn) lblFormHymn.textContent = "Sunday School Hymn";
+
+      if (groupSsLessonNum) groupSsLessonNum.classList.remove('hidden');
+      if (groupSsIntro) groupSsIntro.classList.remove('hidden');
+      if (groupSsOutlines) groupSsOutlines.classList.remove('hidden');
+      if (groupSsDiscussion) groupSsDiscussion.classList.remove('hidden');
+      if (groupSsSummaryAssignment) groupSsSummaryAssignment.classList.remove('hidden');
+      if (isTeacher && groupSsTeacher) groupSsTeacher.classList.remove('hidden');
+      if (isYaya && groupSsYouthFocus) groupSsYouthFocus.classList.remove('hidden');
+      if (groupPrayerPoints) groupPrayerPoints.classList.add('hidden');
+      return;
+    }
+
+    if (formHeaderTitle) formHeaderTitle.textContent = "Devotional Entry";
+
+    // MFM Mountain Top Life
+    if (ch === 'mfm') {
+      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Memory Verse Reference";
+      if (lblFormReadingRef) lblFormReadingRef.textContent = "Fire Scripture Passage";
+      if (lblFormMemoryText) lblFormMemoryText.textContent = "Memory Verse Quotation";
+      if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
+      if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
+
+      if (groupMotivationalQuote) groupMotivationalQuote.classList.remove('hidden');
+      if (groupPropheticWord) groupPropheticWord.classList.remove('hidden');
+      if (groupMorningPrayers) groupMorningPrayers.classList.remove('hidden');
+      if (groupEveningPrayers) groupEveningPrayers.classList.remove('hidden');
+      if (groupPrayerPoints) groupPrayerPoints.classList.add('hidden');
+      return;
+    }
+
+    // DCLM Daily Manna
+    if (ch === 'dclm') {
+      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Key Verse Reference";
+      if (lblFormReadingRef) lblFormReadingRef.textContent = "Text (Scripture Reading)";
+      if (lblFormMemoryText) lblFormMemoryText.textContent = "Key Verse Text";
+      if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
+      if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
+
+      if (groupThoughtForTheDay) groupThoughtForTheDay.classList.remove('hidden');
+      return;
+    }
+
+    // Christ Embassy Rhapsody of Realities
+    if (ch === 'christ_embassy') {
+      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Opening / Theme Scripture";
+      if (lblFormReadingRef) lblFormReadingRef.textContent = "Theme Reading Reference";
+      if (lblFormMemoryText) lblFormMemoryText.textContent = "Scripture Quotation";
+      if (lblFormMessageText) lblFormMessageText.textContent = "Devotional Message";
+      if (lblFormHymn) lblFormHymn.textContent = "Hymn / Faith Declaration";
+      if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "1-Year & 2-Year Bible Reading Plan";
+
+      if (groupConfession) groupConfession.classList.remove('hidden');
+      if (groupFurtherStudy) groupFurtherStudy.classList.remove('hidden');
+      if (groupPrayerPoints) groupPrayerPoints.classList.add('hidden');
+      return;
+    }
+
+    // Our Daily Manna (ODM)
+    if (ch === 'odm') {
+      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Basic Scripture Reference";
+      if (lblFormReadingRef) lblFormReadingRef.textContent = "Devotional Reading Passage";
+      if (lblFormPrayerPoints) lblFormPrayerPoints.textContent = "Prayer Bullets";
+      if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
+
+      if (groupDevotionalCapsule) groupDevotionalCapsule.classList.remove('hidden');
+      if (groupPropheticWord) groupPropheticWord.classList.remove('hidden');
+      return;
+    }
+
+    // Dunamis Seeds of Destiny
+    if (ch === 'dunamis') {
+      if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Scripture Reference";
+      if (lblFormReadingRef) lblFormReadingRef.textContent = "Bible Reading Passage";
+      if (groupThoughtForTheDay) groupThoughtForTheDay.classList.remove('hidden');
+      if (groupPropheticWord) groupPropheticWord.classList.remove('hidden');
+      return;
+    }
+
+    // Default / RCCG Open Heavens
+    if (lblFormMemoryRef) lblFormMemoryRef.textContent = "Memorise (Verse Ref)";
+    if (lblFormReadingRef) lblFormReadingRef.textContent = "Bible Reading Passage";
+    if (lblFormMemoryText) lblFormMemoryText.textContent = "Memory Verse Quotation";
+    if (lblFormMessageText) lblFormMessageText.textContent = "Message Paragraphs";
+    if (lblFormPrayerPoints) lblFormPrayerPoints.textContent = "Prayer Point(s)";
+    if (lblFormHymn) lblFormHymn.textContent = "Hymn Lyrics / Title";
+    if (lblFormBibleInOneYear) lblFormBibleInOneYear.textContent = "Bible in One Year";
+  }
+
+  // Church selection auto-updates author and publication options
+  if (formChurch) {
+    formChurch.addEventListener('change', () => {
+      const ch = formChurch.value;
+      const authors = {
+        rccg: "Pastor E.A. Adeboye",
+        dclm: "Pastor W.F. Kumuyi",
+        mfm: "Dr. D.K. Olukoya",
+        christ_embassy: "Pastor Chris Oyakhilome",
+        odm: "Bishop Dr. Chris Kwakpovwe",
+        dunamis: "Pastor Dr. Paul Enenche",
+        winners: "Bishop David O. Oyedepo"
+      };
+      if (authors[ch] && formAuthor) formAuthor.value = authors[ch];
+
+      if (formManual) {
+        if (ch === 'rccg') {
+          formManual.value = 'open_heavens';
+        } else if (ch === 'dclm') {
+          formManual.value = 'dclm';
+        } else if (ch === 'mfm') {
+          formManual.value = 'mfm';
+        } else if (ch === 'christ_embassy') {
+          formManual.value = 'rhapsody';
+        } else if (ch === 'odm') {
+          formManual.value = 'odm';
+        } else if (ch === 'dunamis') {
+          formManual.value = 'seeds';
+        } else if (ch === 'winners') {
+          formManual.value = 'winners';
+        }
+      }
+      adaptFormToChurch();
+    });
+  }
+
+  if (formManual) {
+    formManual.addEventListener('change', adaptFormToChurch);
+  }
+
+  // 4. One-Tap Clipboard Paste (Phone-friendly)
   if (btnClipboardPaste) {
     btnClipboardPaste.addEventListener('click', async () => {
       try {
@@ -76,7 +290,6 @@
           if (text) {
             batchTextInput.value = text;
             showToast("Pasted from clipboard!");
-            // Auto-trigger parse for instant mobile feedback
             triggerParseBatch();
             return;
           }
@@ -90,18 +303,40 @@
     });
   }
 
-  // 4. Smart Multi-Day Text Parser
+  // 5. Smart Multi-Day & Real-Life Church Text Parser
   function parseBatchDevotionalsText(rawText, defaultChurchConfig) {
     if (!rawText || !rawText.trim()) return [];
 
-    const [church, manual] = defaultChurchConfig.split('_');
-    const sections = rawText.split(/(?:^|\n)(?=DATE[:\s–-]+|\b(?:MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),?\s+[A-Z][a-z]+\s+\d{1,2},?\s+\d{4})/i);
+    const [defChurch, defManual] = defaultChurchConfig.split('_');
+    const sections = rawText.split(/(?:^|\n)(?=DATE[:\s–-]+|\b(?:MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),?\s+[A-Z][a-z]+\s+\d{1,2},?\s+\d{4}|LESSON\s+\d+[:\s–-]+)/i);
 
     const results = [];
 
     sections.forEach((sec, idx) => {
       const text = sec.trim();
       if (!text || text.length < 25) return;
+
+      let detectedChurch = defChurch || 'rccg';
+      let detectedManual = defManual || 'open_heavens';
+
+      if (/DAILY MANNA/i.test(text) || /W\.?\s*F\.?\s*KUMUYI/i.test(text)) {
+        detectedChurch = 'dclm'; detectedManual = 'dclm';
+      } else if (/MOUNTAIN TOP LIFE/i.test(text) || /D\.?\s*K\.?\s*OLUKOYA/i.test(text) || /FIRE SCRIPTURE/i.test(text)) {
+        detectedChurch = 'mfm'; detectedManual = 'mfm';
+      } else if (/RHAPSODY OF REALITIES/i.test(text) || /CHRIS OYAKHILOME/i.test(text) || /FURTHER STUDY/i.test(text)) {
+        detectedChurch = 'christ_embassy'; detectedManual = 'rhapsody';
+      } else if (/OUR DAILY MANNA|DEVOTIONAL CAPSULE/i.test(text) || /BISHOP CHRIS/i.test(text)) {
+        detectedChurch = 'odm'; detectedManual = 'odm';
+      } else if (/SEEDS OF DESTINY/i.test(text) || /PAUL ENENCHE/i.test(text)) {
+        detectedChurch = 'dunamis'; detectedManual = 'seeds';
+      } else if (/SUNDAY SCHOOL/i.test(text) || /^LESSON\s+\d+/i.test(text)) {
+        detectedChurch = 'rccg';
+        if (/YAYA|YOUTH/i.test(text)) detectedManual = 'rccg_yaya_student';
+        else if (/TEACHER/i.test(text)) detectedManual = 'rccg_ss_teacher';
+        else detectedManual = 'rccg_ss_adult';
+      }
+
+      const isSs = detectedManual.startsWith('rccg_ss') || detectedManual.startsWith('rccg_yaya') || /LESSON\s+\d+/i.test(text);
 
       // Extract Date
       let dateIso = '';
@@ -127,17 +362,27 @@
         dateIso = d.toISOString().split('T')[0];
       }
 
+      // Extract Lesson Number (Sunday School)
+      let lessonNum = 1;
+      const lessonMatch = text.match(/LESSON\s+(\d+)[:\s–-]+/i);
+      if (lessonMatch) lessonNum = parseInt(lessonMatch[1], 10);
+
       // Extract Topic
       let topic = "Walking in Divine Glory";
-      const topicMatch = text.match(/TOPIC[:\s–-]+([^\n\(]+)/i);
+      const topicMatch = text.match(/(?:TOPIC|LESSON\s+\d+)[:\s–-]+([^\n\(]+)/i);
       if (topicMatch) {
-        topic = topicMatch[1].trim();
+        topic = topicMatch[1].replace(/^[–—\-\:\s]+/, '').trim();
       }
 
-      // Extract Memory Verse Ref & Text
+      // Extract Author
+      let author = (detectedChurch === 'rccg') ? "Pastor E.A. Adeboye" : "";
+      const authorMatch = text.match(/AUTHOR[:\s–-]+([^\n]+)/i);
+      if (authorMatch) author = authorMatch[1].trim();
+
+      // Extract Memory / Key / Opening Verse Ref & Text
       let memoryVerseRef = "";
       let memoryVerseText = "";
-      const memMatch = text.match(/MEMORI[SZ]E[:\s–-]+(.*?)(?:BIBLE READING|READING:|TEXT:|\n\n)/is);
+      const memMatch = text.match(/(?:MEMORI[SZ]E|KEY VERSE|MEMORY VERSE|OPENING SCRIPTURE|THEME SCRIPTURE|BASIC SCRIPTURE|SCRIPTURE)[:\s–-]+(.*?)(?:BIBLE READING|READING:|TEXT:|FIRE SCRIPTURE:|BIBLE PASSAGE:|\n\n)/is);
       if (memMatch) {
         const rawMem = memMatch[1].trim();
         const refMatch = rawMem.match(/\(([1-3]?\s?[A-Za-z]+(?:\s[A-Za-z]+)?\s\d+:\d+(?:-\d+)?)\)/) || rawMem.match(/([1-3]?\s?[A-Za-z]+(?:\s[A-Za-z]+)?\s\d+:\d+(?:-\d+)?)/);
@@ -149,61 +394,153 @@
         }
       }
 
-      // Extract Bible Reading
+      // Extract Bible Reading / Text / Fire Scripture
       let readingRef = "";
-      const readingMatch = text.match(/(?:BIBLE READING|READING|TEXT|FIRE SCRIPTURE)[:\s–-]+([^\n]+)/i);
+      const readingMatch = text.match(/(?:BIBLE READING|FIRE SCRIPTURE|TEXT|BIBLE PASSAGE|BASIC SCRIPTURE|READING)[:\s–-]+([^\n]+)/i);
       if (readingMatch) {
-        readingRef = readingMatch[1].trim();
+        readingRef = readingMatch[1].replace(/^[–—\-\:\s]+/, '').trim();
       }
 
-      // Extract Prayer Point
+      // MFM Specifics
+      let motivationalQuote = "";
+      const motMatch = text.match(/MOTIVATIONAL QUOTE[:\s–-]+([^\n]+)/i);
+      if (motMatch) motivationalQuote = motMatch[1].trim();
+
+      let propheticWord = "";
+      const proMatch = text.match(/(?:PROPHETIC WORD FOR TODAY|PROPHETIC WORD|PROPHETIC DECLARATION)[:\s–-]+([^\n]+)/i);
+      if (proMatch) propheticWord = proMatch[1].trim();
+
+      let morningPrayers = [];
+      const mornMatch = text.match(/MORNING PRAYERS[:\s–-]+(.*?)(?:EVENING PRAYERS|BIBLE IN ONE YEAR|\Z)/is);
+      if (mornMatch) {
+        morningPrayers = mornMatch[1].split(/\n+/).map(p => p.trim()).filter(p => p.length > 5 && !p.toLowerCase().includes('evening'));
+      }
+
+      let eveningPrayers = [];
+      const eveMatch = text.match(/EVENING PRAYERS[:\s–-]+(.*?)(?:BIBLE IN ONE YEAR|HYMN|\Z)/is);
+      if (eveMatch) {
+        eveningPrayers = eveMatch[1].split(/\n+/).map(p => p.trim()).filter(p => p.length > 5 && !p.toLowerCase().includes('bible in one year'));
+      }
+
+      // DCLM Specifics
+      let thoughtForTheDay = "";
+      const thMatch = text.match(/THOUGHT FOR THE DAY[:\s–-]+([^\n]+)/i);
+      if (thMatch) thoughtForTheDay = thMatch[1].trim();
+
+      // Rhapsody Specifics
+      let confession = "";
+      const confMatch = text.match(/(?:CONFESSION|CONFESSION \/ PRAYER|PRAYER)[:\s–-]+(.*?)(?:FURTHER STUDY|1-YEAR BIBLE READING|\Z)/is);
+      if (confMatch) confession = confMatch[1].replace(/\n+/g, ' ').trim();
+
+      let furtherStudy = [];
+      const fsMatch = text.match(/FURTHER STUDY[:\s–-]+(.*?)(?:1-YEAR|2-YEAR|\Z)/is);
+      if (fsMatch) {
+        furtherStudy = fsMatch[1].split(/[;\n]+/).map(s => s.trim()).filter(s => s.length > 3);
+      }
+
+      // ODM Specifics
+      let devotionalCapsule = "";
+      const capMatch = text.match(/DEVOTIONAL CAPSULE[:\s–-]+(.*?)(?:BASIC SCRIPTURE|MESSAGE|\n\n)/is);
+      if (capMatch) devotionalCapsule = capMatch[1].replace(/\n+/g, ' ').trim();
+
+      // General Prayer Points
       let prayerPoints = [];
-      const prayerMatch = text.match(/(?:PRAYER POINT|PRAYERS|PRAYER|PRAYER POINTS)[:\s–-]+(.*?)(?:HYMN|BIBLE IN ONE YEAR|CONFESSION|\Z)/is);
-      if (prayerMatch) {
-        prayerPoints = [prayerMatch[1].replace(/\n+/g, ' ').trim()];
+      const prayerMatch = text.match(/(?:PRAYER POINT|PRAYER POINTS|PRAYER BULLETS|PRAYER)[:\s–-]+(.*?)(?:HYMN|BIBLE IN ONE YEAR|THOUGHT FOR THE DAY|CONFESSION|\Z)/is);
+      if (prayerMatch && !morningPrayers.length && !eveningPrayers.length) {
+        prayerPoints = prayerMatch[1].split(/\n+/).map(p => p.trim()).filter(p => p.length > 5);
       }
 
-      // Extract Message Body
+      // Sunday School Outlines
+      let outlines = [];
+      let outline1Text = "";
+      let outline2Text = "";
+      const out1Match = text.match(/(?:LESSON OUTLINE 1|OUTLINE 1)[:\s–-]+(.*?)(?:LESSON OUTLINE 2|OUTLINE 2|CLASS DISCUSSION|CONCLUSION|\Z)/is);
+      if (out1Match) outline1Text = out1Match[1].trim();
+
+      const out2Match = text.match(/(?:LESSON OUTLINE 2|OUTLINE 2)[:\s–-]+(.*?)(?:CLASS DISCUSSION|QUESTIONS|CONCLUSION|SUMMARY|\Z)/is);
+      if (out2Match) outline2Text = out2Match[1].trim();
+
+      if (outline1Text) outlines.push(outline1Text);
+      if (outline2Text) outlines.push(outline2Text);
+
+      // Sunday School Discussion
+      let discussion = "";
+      const discMatch = text.match(/(?:CLASS DISCUSSION|QUESTIONS)[:\s–-]+(.*?)(?:CONCLUSION|SUMMARY|ASSIGNMENT|\Z)/is);
+      if (discMatch) discussion = discMatch[1].trim();
+
+      // Sunday School Summary & Assignment
+      let summary = "";
+      const sumMatch = text.match(/(?:LESSON SUMMARY|SUMMARY|CONCLUSION)[:\s–-]+(.*?)(?:ASSIGNMENT|\Z)/is);
+      if (sumMatch) summary = sumMatch[1].trim();
+
+      let assignment = "";
+      const assMatch = text.match(/(?:WEEKLY ASSIGNMENT|ASSIGNMENT)[:\s–-]+([^\n]+)/i);
+      if (assMatch) assignment = assMatch[1].trim();
+
+      let introduction = "";
+      const introMatch = text.match(/LESSON INTRODUCTION[:\s–-]+(.*?)(?:TEACHER|OUTLINE 1|\n\s*\n)/is);
+      if (introMatch) introduction = introMatch[1].trim();
+
+      // Message Body
       let messageParagraphs = [];
       const msgIdx = text.search(/MESSAGE[:\s–-]/i);
       if (msgIdx !== -1) {
         const afterMsg = text.slice(msgIdx + 8);
-        const endStop = afterMsg.search(/PRAYER POINT|PRAYER:|HYMN:|BIBLE IN ONE YEAR/i);
+        const endStop = afterMsg.search(/PRAYER POINT|PRAYERS|PRAYER:|HYMN:|BIBLE IN ONE YEAR|THOUGHT FOR THE DAY|CONFESSION|MORNING PRAYERS/i);
         const rawMsgBody = endStop !== -1 ? afterMsg.slice(0, endStop) : afterMsg;
         messageParagraphs = rawMsgBody.split(/\n\s*\n/).map(p => p.trim()).filter(p => p.length > 20);
-      } else {
+      } else if (!isSs) {
         const paras = text.split(/\n\s*\n/).map(p => p.trim()).filter(p => 
-          !p.match(/^(?:DATE|TOPIC|MEMORI|BIBLE READING|PRAYER)/i) && p.length > 25
+          !p.match(/^(?:DATE|TOPIC|MEMORI|KEY VERSE|BIBLE READING|TEXT|FIRE SCRIPTURE|PRAYER|THOUGHT|CONFESSION)/i) && p.length > 25
         );
         messageParagraphs = paras;
       }
 
-      // Extract Hymn or Confession
+      // Hymn or Reading Plan
       let hymn = "";
-      const hymnMatch = text.match(/(?:HYMN|CONFESSION)[:\s–-]+([^\n]+)/i);
-      if (hymnMatch) {
-        hymn = hymnMatch[1].trim();
-      }
+      const hymnMatch = text.match(/(?:HYMN|SUNDAY SCHOOL HYMN)[:\s–-]+([^\n]+)/i);
+      if (hymnMatch) hymn = hymnMatch[1].trim();
+
+      let bibleInOneYear = "";
+      const bOneMatch = text.match(/(?:BIBLE IN ONE YEAR|1-YEAR BIBLE READING|1-YEAR READING PLAN)[:\s–-]+([^\n]+)/i);
+      if (bOneMatch) bibleInOneYear = bOneMatch[1].trim();
 
       results.push({
-        church: church || 'rccg',
-        manual: manual || 'open_heavens',
+        church: detectedChurch,
+        manual: detectedManual,
         date: dateIso,
         topic,
+        author,
         memoryVerseRef,
         memoryVerseText,
         bibleReadingRef: readingRef,
-        message: messageParagraphs.length ? messageParagraphs : ["The glory of the Lord fills the temple."],
-        prayerPoints: prayerPoints.length ? prayerPoints : ["Father, let Your will be done in my life today."],
+        message: messageParagraphs.length ? messageParagraphs : [topic],
+        prayerPoints: prayerPoints.length ? prayerPoints : (detectedChurch === 'mfm' ? [] : ["Father, let Your glory manifest in my life today."]),
+        morningPrayers,
+        eveningPrayers,
+        motivationalQuote,
+        propheticWord,
+        thoughtForTheDay,
+        confession,
+        furtherStudy,
+        devotionalCapsule,
         hymn,
-        source: "Kairogram Devotionals Studio Mobile"
+        bibleInOneYear,
+        isSundaySchool: isSs,
+        lessonNum,
+        introduction,
+        outlines,
+        discussion,
+        summary,
+        assignment,
+        source: "Kairogram Devotionals Cloud Studio Mobile"
       });
     });
 
     return results;
   }
 
-  // 5. Render Parsed Days in Mobile View
+  // 6. Render Parsed Days in Mobile View
   function renderParsedList() {
     parsedDaysCount.textContent = parsedBatchItems.length;
     btnPublishAllBatch.disabled = (parsedBatchItems.length === 0);
@@ -221,12 +558,16 @@
     parsedListContainer.innerHTML = parsedBatchItems.map((item, idx) => `
       <div class="mobile-parsed-item">
         <div class="parsed-item-top">
-          <span class="item-date-tag">${item.date}</span>
+          <span class="item-date-tag">${escapeHtml(item.church.toUpperCase())} • ${item.date}</span>
           <button type="button" class="btn-item-del" data-remove-idx="${idx}">Remove</button>
         </div>
         <div class="item-topic-line">${escapeHtml(item.topic)}</div>
         <div class="item-sub-meta">
-          <span>${escapeHtml(item.memoryVerseRef || 'No memory verse')}</span> • <span>${item.message.length} para</span>
+          <span>${escapeHtml(item.memoryVerseRef || item.bibleReadingRef || 'Scripture')}</span>
+          ${item.thoughtForTheDay ? ` • <span style="color:#e53e3e;">Thought</span>` : ''}
+          ${item.motivationalQuote ? ` • <span style="color:#dd6b20;">Quote</span>` : ''}
+          ${item.confession ? ` • <span style="color:#9f7aea;">Confession</span>` : ''}
+          ${item.isSundaySchool ? ` • <span style="color:#818cf8;">SS Lesson ${item.lessonNum}</span>` : ''}
         </div>
       </div>
     `).join('');
@@ -251,7 +592,6 @@
     renderParsedList();
     if (parsedBatchItems.length > 0) {
       showToast(`Parsed ${parsedBatchItems.length} day(s) ready to publish!`);
-      // Scroll smoothly down to the parsed preview
       const targetSec = document.getElementById('parsedCardSection');
       if (targetSec) targetSec.scrollIntoView({ behavior: 'smooth' });
     } else {
@@ -263,7 +603,7 @@
     btnParseBatch.addEventListener('click', triggerParseBatch);
   }
 
-  // 6. Publish Batch to Cloud API (1 Tap)
+  // 7. Publish Batch to Cloud API (1 Tap)
   if (btnPublishAllBatch) {
     btnPublishAllBatch.addEventListener('click', async () => {
       if (!parsedBatchItems.length) return;
@@ -299,7 +639,7 @@
     });
   }
 
-  // 7. Single Day Form Publisher
+  // 8. Single Day Form Publisher (With All Church-Adaptive Fields)
   async function submitSingleForm() {
     const topic = formTopic.value.trim();
     const dateVal = formDate.value;
@@ -308,12 +648,16 @@
       return;
     }
 
+    const ch = formChurch.value;
+    const man = formManual.value;
+    const isSs = man.startsWith('rccg_ss') || man.startsWith('rccg_yaya');
+
     const msgParas = formMessageText.value.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
     const prayerPts = formPrayerPoints.value.split('\n').map(p => p.trim()).filter(Boolean);
 
     const payload = {
-      church: formChurch.value,
-      manual: formManual.value,
+      church: ch,
+      manual: man,
       date: dateVal,
       topic,
       author: formAuthor.value.trim(),
@@ -323,8 +667,42 @@
       message: msgParas.length ? msgParas : [topic],
       prayerPoints: prayerPts.length ? prayerPts : ["Lord, guide my steps today."],
       hymn: formHymnOrConfession.value.trim(),
+      bibleInOneYear: formBibleInOneYear ? formBibleInOneYear.value.trim() : "",
       source: "Kairogram Devotionals Mobile Studio"
     };
+
+    // MFM fields
+    if (formMotivationalQuote && formMotivationalQuote.value.trim()) payload.motivationalQuote = formMotivationalQuote.value.trim();
+    if (formPropheticWord && formPropheticWord.value.trim()) payload.propheticWord = formPropheticWord.value.trim();
+    if (formMorningPrayers && formMorningPrayers.value.trim()) payload.morningPrayers = formMorningPrayers.value.split('\n').map(p => p.trim()).filter(Boolean);
+    if (formEveningPrayers && formEveningPrayers.value.trim()) payload.eveningPrayers = formEveningPrayers.value.split('\n').map(p => p.trim()).filter(Boolean);
+
+    // DCLM & Dunamis
+    if (formThoughtForTheDay && formThoughtForTheDay.value.trim()) payload.thoughtForTheDay = formThoughtForTheDay.value.trim();
+
+    // Rhapsody
+    if (formConfession && formConfession.value.trim()) payload.confession = formConfession.value.trim();
+    if (formFurtherStudy && formFurtherStudy.value.trim()) payload.furtherStudy = formFurtherStudy.value.split(/[;\n]+/).map(s => s.trim()).filter(Boolean);
+
+    // ODM
+    if (formDevotionalCapsule && formDevotionalCapsule.value.trim()) payload.devotionalCapsule = formDevotionalCapsule.value.trim();
+
+    // Sunday School
+    if (isSs) {
+      payload.isSundaySchool = true;
+      payload.lessonNum = formLessonNum ? parseInt(formLessonNum.value, 10) || 1 : 1;
+      payload.introduction = formSsIntro ? formSsIntro.value.trim() : "";
+      payload.teachingAim = formSsTeacherAim ? formSsTeacherAim.value.trim() : "";
+      payload.youthFocus = formSsYouthFocus ? formSsYouthFocus.value.trim() : "";
+      payload.discussion = formSsDiscussion ? formSsDiscussion.value.trim() : "";
+      payload.summary = formSsSummary ? formSsSummary.value.trim() : "";
+      payload.assignment = formSsAssignment ? formSsAssignment.value.trim() : "";
+      
+      const outlines = [];
+      if (formSsOutline1 && formSsOutline1.value.trim()) outlines.push(formSsOutline1.value.trim());
+      if (formSsOutline2 && formSsOutline2.value.trim()) outlines.push(formSsOutline2.value.trim());
+      payload.outlines = outlines;
+    }
 
     try {
       const resp = await fetch('/api/devotionals', {
@@ -347,7 +725,7 @@
   if (btnSaveSingleDevotional) btnSaveSingleDevotional.addEventListener('click', submitSingleForm);
   if (btnSaveSingleDevotionalBottom) btnSaveSingleDevotionalBottom.addEventListener('click', submitSingleForm);
 
-  // 8. Stored Library Fetcher
+  // 9. Stored Library Fetcher
   async function fetchStoredLibrary() {
     try {
       const resp = await fetch('/api/devotionals?latest=true&t=' + Date.now());
@@ -394,11 +772,11 @@
           <span class="lib-date">${escapeHtml(item.dateKey)}</span>
         </div>
         <div class="lib-title">${escapeHtml(item.topic || 'Untitled')}</div>
-        <div class="lib-preview">"${escapeHtml(item.memoryVerseText || item.memoryVerseRef || '')}"</div>
+        <div class="lib-preview">"${escapeHtml(item.memoryVerseText || item.memoryVerseRef || item.bibleReadingRef || '')}"</div>
       </div>
     `).join('');
 
-    // Tap card to edit
+    // Tap card to edit with full church adaptation
     libraryGrid.querySelectorAll('[data-edit-item]').forEach(card => {
       card.addEventListener('click', () => {
         const [d, ch, man] = card.getAttribute('data-edit-item').split('|');
@@ -406,6 +784,8 @@
         if (entry) {
           formChurch.value = entry.church || 'rccg';
           formManual.value = entry.manual || 'open_heavens';
+          adaptFormToChurch();
+
           formDate.value = entry.date || d;
           formTopic.value = entry.topic || '';
           formAuthor.value = entry.author || '';
@@ -415,6 +795,28 @@
           formMessageText.value = Array.isArray(entry.message) ? entry.message.join('\n\n') : (entry.message || '');
           formPrayerPoints.value = Array.isArray(entry.prayerPoints) ? entry.prayerPoints.join('\n') : (entry.prayerPoints || '');
           formHymnOrConfession.value = entry.hymn || entry.confession || '';
+          if (formBibleInOneYear) formBibleInOneYear.value = entry.bibleInOneYear || '';
+
+          if (formMotivationalQuote) formMotivationalQuote.value = entry.motivationalQuote || '';
+          if (formPropheticWord) formPropheticWord.value = entry.propheticWord || '';
+          if (formThoughtForTheDay) formThoughtForTheDay.value = entry.thoughtForTheDay || '';
+          if (formConfession) formConfession.value = entry.confession || '';
+          if (formFurtherStudy) formFurtherStudy.value = Array.isArray(entry.furtherStudy) ? entry.furtherStudy.join('; ') : (entry.furtherStudy || '');
+          if (formDevotionalCapsule) formDevotionalCapsule.value = entry.devotionalCapsule || '';
+          if (formMorningPrayers) formMorningPrayers.value = Array.isArray(entry.morningPrayers) ? entry.morningPrayers.join('\n') : (entry.morningPrayers || '');
+          if (formEveningPrayers) formEveningPrayers.value = Array.isArray(entry.eveningPrayers) ? entry.eveningPrayers.join('\n') : (entry.eveningPrayers || '');
+
+          if (formLessonNum) formLessonNum.value = entry.lessonNum || 1;
+          if (formSsIntro) formSsIntro.value = entry.introduction || '';
+          if (formSsTeacherAim) formSsTeacherAim.value = entry.teachingAim || '';
+          if (formSsYouthFocus) formSsYouthFocus.value = entry.youthFocus || '';
+          if (formSsDiscussion) formSsDiscussion.value = entry.discussion || '';
+          if (formSsSummary) formSsSummary.value = entry.summary || '';
+          if (formSsAssignment) formSsAssignment.value = entry.assignment || '';
+          if (entry.outlines && entry.outlines.length) {
+            if (formSsOutline1) formSsOutline1.value = typeof entry.outlines[0] === 'string' ? entry.outlines[0] : (entry.outlines[0]?.title || '');
+            if (formSsOutline2) formSsOutline2.value = typeof entry.outlines[1] === 'string' ? entry.outlines[1] : (entry.outlines[1]?.title || '');
+          }
 
           // Switch to Form Entry
           tabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-tab') === 'tabSingleForm'));
@@ -435,7 +837,7 @@
     });
   }
 
-  // 9. 1-Tap Auto-Fetch Tomorrow
+  // 10. 1-Tap Auto-Fetch Tomorrow
   if (btnAutoFetchUpcoming) {
     btnAutoFetchUpcoming.addEventListener('click', async () => {
       btnAutoFetchUpcoming.disabled = true;
@@ -483,7 +885,7 @@
     });
   }
 
-  // 10. Quick Export JSON
+  // 11. Quick Export JSON
   if (btnQuickExportJson) {
     btnQuickExportJson.addEventListener('click', async () => {
       try {
@@ -501,9 +903,10 @@
     });
   }
 
-  // 11. Sample Template Loaders
+  // 12. Real-Life Sample Template Loaders
   if (btnPasteSampleOpenHeavens) {
     btnPasteSampleOpenHeavens.addEventListener('click', () => {
+      batchChurchSelect.value = 'rccg_open_heavens';
       batchTextInput.value = `DATE: 2026-09-21
 TOPIC: The Power of Persistent Prayer
 AUTHOR: Pastor E.A. Adeboye
@@ -515,24 +918,16 @@ Prayer is not an occasional emergency parachute; it is the vital spiritual breat
 When the unjust judge in Jesus' parable yielded to the persistent plea of the widow, how much more will your loving Heavenly Father avenge His elect who cry out day and night? Never give up on your spiritual altar!
 
 PRAYER POINT: O Lord, revive my prayer altar with fresh Holy Ghost fire! Let every spirit of prayerlessness die in my life today!
-HYMN: Hymn 26: Pass Me Not, O Gentle Saviour
-
-DATE: 2026-09-22
-TOPIC: Walking in Divine Purity
-AUTHOR: Pastor E.A. Adeboye
-MEMORIZE: 1 Peter 1:16 - Because it is written, Be ye holy; for I am holy.
-BIBLE READING: 1 Peter 1:13-19
-MESSAGE:
-Holiness is the essential beauty of God's presence. When you choose to consecrate your life unto God, heaven backs up your confessions with signs and wonders.
-
-PRAYER POINT: Father, purge me of all secret sins and make me a vessel unto honour.`;
-      showToast("Loaded 2-day Open Heavens sample");
+BIBLE IN ONE YEAR: Luke 17-19; Psalm 105
+HYMN: Hymn 26: Pass Me Not, O Gentle Saviour`;
+      showToast("Loaded Open Heavens template");
       triggerParseBatch();
     });
   }
 
   if (btnPasteSampleDclm) {
     btnPasteSampleDclm.addEventListener('click', () => {
+      batchChurchSelect.value = 'dclm_dclm';
       batchTextInput.value = `DATE: 2026-09-21
 TOPIC: The Uncompromising Standard
 AUTHOR: Pastor W.F. Kumuyi
@@ -541,9 +936,110 @@ TEXT: 2 Timothy 2:19-22
 MESSAGE:
 In an era where cultural compromises seek to erode biblical convictions, God's unchanging standard of holiness remains unshaken. True discipleship requires total separation from all iniquity.
 
-PRAYER POINT: Lord, sanctify my heart completely and keep me unspotted from the world.
-THOUGHT FOR THE DAY: God's standard of holiness is eternal and non-negotiable.`;
-      showToast("Loaded Daily Manna sample");
+The foundation of God is sealed with divine knowledge and practical departure from sin. When believers walk with pure hearts, heaven confirms their testimony with divine preservation.
+
+THOUGHT FOR THE DAY: God's standard of holiness is eternal and non-negotiable.
+BIBLE IN ONE YEAR: 2 Timothy 1-4; Proverbs 12`;
+      showToast("Loaded DCLM Daily Manna template");
+      triggerParseBatch();
+    });
+  }
+
+  if (btnPasteSampleMfm) {
+    btnPasteSampleMfm.addEventListener('click', () => {
+      batchChurchSelect.value = 'mfm_mfm';
+      batchTextInput.value = `DATE: 2026-09-21
+TOPIC: Total Victory Over Stubborn Yokes
+AUTHOR: Dr. D.K. Olukoya
+MOTIVATIONAL QUOTE: A closed mouth is a closed destiny; spiritual warfare responds only to Holy Ghost fire.
+PROPHETIC WORD FOR TODAY: Every Pharaoh harassing your star shall drown in the Red Sea today!
+FIRE SCRIPTURE: Isaiah 10:27; Obadiah 1:17
+MEMORY VERSE: Isaiah 10:27 - And it shall come to pass in that day, that his burden shall be taken away from off thy shoulder, and his yoke from off thy neck, and the yoke shall be destroyed because of the anointing.
+MESSAGE:
+Beloved, there are burdens that linger until the supernatural friction of prayer generates sufficient holy fire to destroy them. The yoke is not meant to be managed or endured; it must be completely shattered by the anointing.
+
+When God's anointing saturates a life, every ancestral chain melts away like wax before the furnace. Arise in violent faith and claim your total deliverance today!
+
+MORNING PRAYERS:
+1. Every ancestral padlock assigned to lock my progress, catch fire in Jesus' name!
+2. Holy Ghost fire, incubate my prayer altar for unusual breakthroughs!
+3. Blood of Jesus, wipe off every satanic handwriting against my destiny!
+
+EVENING PRAYERS:
+1. Powers of the night assigned against my glory, scatter unto desolation!
+2. O God arise, and let all the enemies of my divine lifting be scattered!
+3. I cover my sleep and my household with the impenetrable blood of Jesus!
+BIBLE IN ONE YEAR: Isaiah 10-12; Psalm 91`;
+      showToast("Loaded MFM Mountain Top Life template");
+      triggerParseBatch();
+    });
+  }
+
+  if (btnPasteSampleRhapsody) {
+    btnPasteSampleRhapsody.addEventListener('click', () => {
+      batchChurchSelect.value = 'christ_embassy_rhapsody';
+      batchTextInput.value = `DATE: 2026-09-21
+TOPIC: Reigning In Life Through Christ
+AUTHOR: Pastor Chris Oyakhilome
+OPENING SCRIPTURE: Romans 5:17 - For if by one man's offence death reigned by one; much more they which receive abundance of grace and of the gift of righteousness shall reign in life by one, Jesus Christ.
+THEME READING: Romans 5:17-21
+MESSAGE:
+You were not called into Christianity to live as a victim of circumstances or worldly systems. Through the redemptive work of Christ, you have received the abundance of grace and the gift of righteousness, enabling you to reign as a king in this present life.
+
+Righteousness gives you bold standing in the presence of God and absolute dominion over sickness, lack, and the forces of darkness. Speak words of faith today and exercise your divine authority!
+
+CONFESSION:
+I am the righteousness of God in Christ Jesus! I reign and rule in life with dominion, joy, and unfailing peace. No weapon formed against me prospers because greater is He that is in me than he that is in the world. Hallelujah!
+
+FURTHER STUDY:
+Romans 8:31-37
+Ephesians 1:19-23
+Colossians 1:26-28
+
+1-YEAR BIBLE READING PLAN: Galatians 5:16-26; Isaiah 44-46
+2-YEAR BIBLE READING PLAN: 1 Timothy 5:11-18; Jeremiah 39`;
+      showToast("Loaded Rhapsody of Realities template");
+      triggerParseBatch();
+    });
+  }
+
+  if (btnPasteSampleSundaySchool) {
+    btnPasteSampleSundaySchool.addEventListener('click', () => {
+      batchChurchSelect.value = 'rccg_rccg_ss_adult';
+      batchTextInput.value = `LESSON 3: Sunday School Manual
+DATE: 2026-09-20
+TOPIC: The Sanctified Vessel
+AUTHOR: RCCG Sunday School Directorate
+BIBLE PASSAGE: 2 Timothy 2:20-22
+MEMORY VERSE: 2 Timothy 2:21 - If a man therefore purge himself from these, he shall be a vessel unto honour, sanctified, and meet for the master's use, and prepared unto every good work.
+
+LESSON INTRODUCTION:
+In a great house there are vessels of gold, silver, wood, and earth. Sanctification is the believer's deliberate consecration unto God, separating oneself from contamination so as to be fit for the Master's highest use.
+
+LESSON OUTLINE 1: The Call to Personal Consecration
+Believers are commanded to cleanse themselves from worldly entanglements and pursue righteousness, faith, charity, and peace. Consecration is not optional for anyone who desires heaven's backing.
+
+LESSON OUTLINE 2: The Rewards of a Sanctified Life
+When a vessel is purified, God fills it with spiritual gifts, power, and honor. Such a believer becomes an instrument of revival and a channel of divine blessings in the kingdom.
+
+CLASS DISCUSSION:
+How can a Christian maintain purity and sanctification in the midst of an ungodly workplace or school environment? (Discuss with biblical examples).
+
+LESSON SUMMARY:
+Purification from sin is essential for anyone desiring to be used powerfully by God in these end times.
+
+CONCLUSION:
+Present your body today as a living sacrifice, holy and acceptable unto God, which is your reasonable service.
+
+WEEKLY ASSIGNMENT:
+Identify three personal habits that hinder spiritual consecration and write out scriptural steps to eliminate them this week.
+
+SUNDAY SCHOOL HYMN:
+1. O Sunday School, on the Lord's Day,
+O how I love thee well;
+I am so well prepared for thee,
+To learn thy holy ways.`;
+      showToast("Loaded Sunday School Lesson template");
       triggerParseBatch();
     });
   }
@@ -562,7 +1058,8 @@ THOUGHT FOR THE DAY: God's standard of holiness is eternal and non-negotiable.`;
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // Initial Load
+  // Initial Load & Form Adaptation
+  adaptFormToChurch();
   fetchStoredLibrary();
 
 })();
