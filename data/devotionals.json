@@ -3,7 +3,7 @@
   "date": "2026-09-18",
   "dateLabel": "Friday, September 18, 2026",
   "updatedAt": "2026-09-19T14:22:16.157Z",
-  "source": "flatimes.com (Tier 3 Cloud Sync)",
+  "source": "Kairogram Devotionals Cloud CMS (Vercel Live Feed)",
   "publications": {
     "rccg_open_heavens": {
       "church": "rccg",
@@ -280,28 +280,28 @@
       "rccg_open_heavens": {
         "church": "rccg",
         "manual": "open_heavens",
-        "title": "Testing Batch Post",
+        "title": "Open Heavens Daily Devotional",
         "author": "Pastor E.A. Adeboye",
         "date": "2026-09-20",
-        "dateLabel": "2026-09-20",
-        "topic": "Testing Batch Post",
-        "memoryVerseRef": "",
-        "memoryVerseText": "",
-        "bibleReadingRef": "",
+        "dateLabel": "Sunday, September 20, 2026",
+        "topic": "The Wonders of Divine Favor",
+        "memoryVerseRef": "Psalm 102:13",
+        "memoryVerseText": "Thou shalt arise, and have mercy upon Zion: for the time to favour her, yea, the set time, is come.",
+        "bibleReadingRef": "Esther 2:15-18",
         "message": [
-          "Paragraph 1",
-          "Paragraph 2"
+          "Favor is the supernatural fragrance that attracts unmerited blessings into the life of a believer. When God's favor rests upon an ordinary person, human protocols are suspended for their sake.",
+          "Queen Esther was a simple captive orphan in Shushan, yet when the oil of divine favor touched her countenance, she found favor in the sight of all that looked upon her.",
+          "Stay rooted in holiness, prayer, and humility, and watch God open doors no mortal can shut."
         ],
-        "prayerPoints": [],
-        "hymn": "",
-        "thoughtForTheDay": "",
-        "motivationalQuote": "",
-        "confession": "",
-        "propheticWord": "",
-        "devotionalCapsule": "",
+        "prayerPoints": [
+          "Father, let Your set time of divine favor locate my destiny today in Jesus' name.",
+          "Lord, let Your favor surround me like a shield wherever I go."
+        ],
+        "hymn": "Hymn 26: Pass Me Not, O Gentle Saviour",
+        "bibleInOneYear": "Esther 1-4; Psalm 102",
         "readTime": "4 min read",
         "source": "Kairogram Devotionals Cloud CMS",
-        "updatedAt": "2026-09-19T12:43:46.310Z"
+        "updatedAt": "2026-09-19T14:40:00.000Z"
       },
       "rccg_rccg_ss_teacher": {
         "church": "rccg",
