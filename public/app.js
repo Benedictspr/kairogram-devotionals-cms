@@ -449,10 +449,14 @@
     }
 
     try {
-      // 1. Post to live Vercel endpoint
+      // 1. Post to live Vercel endpoint with optional GitHub Token
+      const ghToken = localStorage.getItem('kairogram_cms_github_token') || '';
+      const reqHeaders = { 'Content-Type': 'application/json' };
+      if (ghToken) reqHeaders['Authorization'] = `Bearer ${ghToken}`;
+
       const resp = await fetch('/api/devotionals', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: reqHeaders,
         body: JSON.stringify(payload)
       });
       const res = await resp.json();

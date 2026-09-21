@@ -45,7 +45,7 @@ function loadDevotionals() {
   return memoryStore;
 }
 
-async function saveDevotionals(store) {
+async function saveDevotionals(store, req) {
   memoryStore = store;
   const jsonStr = JSON.stringify(store, null, 2);
 
@@ -63,8 +63,9 @@ async function saveDevotionals(store) {
   }
 
   // 3. Optional GitHub Direct Persistence
-  const token = process.env.GITHUB_TOKEN;
-  const repo = process.env.GITHUB_REPO;
+  const authHeader = (req && req.headers && req.headers['authorization']) ? req.headers['authorization'].replace(/^Bearer\s+/i, '').trim() : '';
+  const token = authHeader || process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO || 'Benedictspr/kairogram-devotionals-cms';
   if (token && repo && typeof fetch === 'function') {
     try {
       const contentBase64 = Buffer.from(jsonStr, 'utf8').toString('base64');
@@ -103,10 +104,13 @@ async function saveDevotionals(store) {
 }
 
 module.exports = async (req, res) => {
-  // CORS Headers
+  // CORS & Anti-Caching Headers (Ensure fresh content on every request)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
 
   if (req.method === 'OPTIONS') {
     return res.status(204).end();
@@ -269,7 +273,7 @@ module.exports = async (req, res) => {
       }
 
       store.updatedAt = new Date().toISOString();
-      await saveDevotionals(store);
+      await saveDevotionals(store, req);
 
       return res.status(200).json({
         success: true,
