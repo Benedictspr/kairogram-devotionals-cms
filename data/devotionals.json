@@ -2,34 +2,53 @@
   "version": "1.0",
   "date": "2026-09-18",
   "dateLabel": "Friday, September 18, 2026",
-  "updatedAt": "2026-09-19T14:22:16.157Z",
+  "updatedAt": "2026-09-23T14:41:49.247Z",
   "source": "Kairogram Devotionals Cloud CMS (Vercel Live Feed)",
   "publications": {
     "rccg_open_heavens": {
       "church": "rccg",
       "manual": "open_heavens",
-      "title": "Open Heavens Daily Devotional",
+      "title": "More Than a Conqueror",
       "author": "Pastor E.A. Adeboye",
-      "date": "2026-09-18",
-      "dateLabel": "Friday, September 18, 2026",
-      "topic": "Permeating Anointing",
-      "memoryVerseRef": "Psalm 138:8",
-      "memoryVerseText": "The LORD will perfect that which concerneth me: thy mercy, O LORD, endureth for ever: forsake not the works of thine own hands.",
-      "bibleReadingRef": "2 Kings 13:20-21",
+      "date": "2026-09-23",
+      "dateLabel": "2026-09-23",
+      "topic": "More Than a Conqueror",
+      "memoryVerseRef": "2 Corinthians 2:14",
+      "memoryVerseText": "Now thanks be unto God, which always causeth us to triumph in Christ, and maketh manifest the savour of his knowledge by us in every place.",
+      "bibleReadingRef": "Romans 8:28–37",
+      "fireScriptureRef": "",
+      "textRef": "",
+      "basicScriptureRef": "",
       "message": [
-        "The anointing of God is not a passive ornament; it is the active, penetrating power of the Holy Spirit that defies physical boundaries, time, and human limitations. In (Psalm 138:8), the Psalmist boldly declares that God will perfect that which concerns him.",
-        "In our Bible reading in (2 Kings 13:21), a remarkable event took place: even after Prophet Elisha had died and his bones were lying in the sepulchre, a dead man cast into his grave touched Elisha's bones, revived immediately, and stood up on his feet! That is the power of permeating anointing.",
-        "To carry a permeating anointing, you must live a consecrated life in the secret place. You cannot play with sin or compromise your spiritual altar and expect heaven's fire to remain intact. Surrender your members as instruments of righteousness unto God (Romans 6:13)."
+        "Life is full of battles. From the moment we are born until we leave this world, we experience different challenges. However, when a person comes to Christ, everything changes. Through Christ, the believer becomes a new creation, and the battles of life no longer have to determine the outcome. Instead of struggling without hope of victory, the believer can live with the assurance of victory in Christ.",
+        "Romans 8:37 tells believers that they are more than conquerors through Christ. A conqueror fights and defeats an enemy to obtain victory, while someone who is more than a conqueror enjoys a victory that has already been achieved. As believers, we are recipients of the victory Jesus has won.",
+        "Jesus went to the cross, defeated the devil, and secured victory for humanity. After His resurrection, He declared that all authority in heaven and on earth had been given to Him (Matthew 28:18). He then gave power to His disciples through the Holy Spirit (Acts 1:8).",
+        "When the disciples received the Holy Spirit, they began to operate in the authority Christ had given them. They cast out demons, healed the sick, preached the gospel, and continued to spread the message of Christ even when they encountered persecution. When persecution caused believers to scatter, they used the opportunity to preach the gospel in other places (Acts 8:1–4). Philip, for example, went to Samaria, where many people received the message and the city experienced great spiritual impact (Acts 8:5–8).",
+        "Being more than a conqueror does not mean that you will never face challenges. Rather, it means that when challenges arise, you can face them with the confidence that God can work through them for His purpose. What appears to be an attack can ultimately become an opportunity for God to accomplish His plan.",
+        "The death of Jesus on the cross is a powerful example. The enemy intended the crucifixion for destruction, but God used it to accomplish salvation. 1 Corinthians 2:8 explains that the rulers of that age did not understand the wisdom of God in what was taking place.",
+        "Therefore, remain confident in Christ. Trust God even when circumstances appear difficult, knowing that He can turn situations around and cause His purpose to prevail."
       ],
       "prayerPoints": [
-        "Father, let Your anointing saturate every fiber of my being in Jesus' mighty name.",
-        "Lord, let the fire of Your Holy Spirit continually burn on my prayer altar."
+        "Key Point: Being more than a conqueror means that you will always triumph over the enemy's plans."
       ],
-      "hymn": "Hymn 26: Pass Me Not, O Gentle Saviour",
-      "bibleInOneYear": "Isaiah 7-9; Galatians 3",
+      "hymn": "Conquerors and Overcomers Now Are We",
+      "thoughtForTheDay": "",
+      "motivationalQuote": "",
+      "confession": "",
+      "propheticWord": "",
+      "propheticDeclaration": "",
+      "devotionalCapsule": "",
+      "morningPrayers": [],
+      "eveningPrayers": [],
+      "furtherStudy": [],
+      "oneYearReading": "Micah 5–7",
+      "twoYearReading": "",
+      "bibleInOneYear": "Micah 5–7",
+      "rememberThis": "",
+      "assignments": "",
       "readTime": "4 min read",
       "source": "Kairogram Devotionals Cloud CMS",
-      "updatedAt": "2026-09-18T00:00:00.000Z"
+      "updatedAt": "2026-09-23T14:41:49.247Z"
     },
     "mfm_mfm": {
       "church": "mfm",
@@ -257,6 +276,54 @@
       "readTime": "4 min read"
     }
   },
-  "dates": {},
+  "dates": {
+    "2026-09-23": {
+      "rccg_open_heavens": {
+        "church": "rccg",
+        "manual": "open_heavens",
+        "title": "More Than a Conqueror",
+        "author": "Pastor E.A. Adeboye",
+        "date": "2026-09-23",
+        "dateLabel": "2026-09-23",
+        "topic": "More Than a Conqueror",
+        "memoryVerseRef": "2 Corinthians 2:14",
+        "memoryVerseText": "Now thanks be unto God, which always causeth us to triumph in Christ, and maketh manifest the savour of his knowledge by us in every place.",
+        "bibleReadingRef": "Romans 8:28–37",
+        "fireScriptureRef": "",
+        "textRef": "",
+        "basicScriptureRef": "",
+        "message": [
+          "Life is full of battles. From the moment we are born until we leave this world, we experience different challenges. However, when a person comes to Christ, everything changes. Through Christ, the believer becomes a new creation, and the battles of life no longer have to determine the outcome. Instead of struggling without hope of victory, the believer can live with the assurance of victory in Christ.",
+          "Romans 8:37 tells believers that they are more than conquerors through Christ. A conqueror fights and defeats an enemy to obtain victory, while someone who is more than a conqueror enjoys a victory that has already been achieved. As believers, we are recipients of the victory Jesus has won.",
+          "Jesus went to the cross, defeated the devil, and secured victory for humanity. After His resurrection, He declared that all authority in heaven and on earth had been given to Him (Matthew 28:18). He then gave power to His disciples through the Holy Spirit (Acts 1:8).",
+          "When the disciples received the Holy Spirit, they began to operate in the authority Christ had given them. They cast out demons, healed the sick, preached the gospel, and continued to spread the message of Christ even when they encountered persecution. When persecution caused believers to scatter, they used the opportunity to preach the gospel in other places (Acts 8:1–4). Philip, for example, went to Samaria, where many people received the message and the city experienced great spiritual impact (Acts 8:5–8).",
+          "Being more than a conqueror does not mean that you will never face challenges. Rather, it means that when challenges arise, you can face them with the confidence that God can work through them for His purpose. What appears to be an attack can ultimately become an opportunity for God to accomplish His plan.",
+          "The death of Jesus on the cross is a powerful example. The enemy intended the crucifixion for destruction, but God used it to accomplish salvation. 1 Corinthians 2:8 explains that the rulers of that age did not understand the wisdom of God in what was taking place.",
+          "Therefore, remain confident in Christ. Trust God even when circumstances appear difficult, knowing that He can turn situations around and cause His purpose to prevail."
+        ],
+        "prayerPoints": [
+          "Key Point: Being more than a conqueror means that you will always triumph over the enemy's plans."
+        ],
+        "hymn": "Conquerors and Overcomers Now Are We",
+        "thoughtForTheDay": "",
+        "motivationalQuote": "",
+        "confession": "",
+        "propheticWord": "",
+        "propheticDeclaration": "",
+        "devotionalCapsule": "",
+        "morningPrayers": [],
+        "eveningPrayers": [],
+        "furtherStudy": [],
+        "oneYearReading": "Micah 5–7",
+        "twoYearReading": "",
+        "bibleInOneYear": "Micah 5–7",
+        "rememberThis": "",
+        "assignments": "",
+        "readTime": "4 min read",
+        "source": "Kairogram Devotionals Cloud CMS",
+        "updatedAt": "2026-09-23T14:41:49.247Z"
+      }
+    }
+  },
   "sunday_school_lessons": []
 }
