@@ -8,10 +8,10 @@ function getStorePath() {
   return path.join(process.cwd(), 'data', 'devotionals.json');
 }
 
-function loadDevotionals() {
+async function loadDevotionals(req) {
   if (memoryStore) return memoryStore;
   
-  // Check /tmp first (in case updated during warm serverless lifecycle)
+  // 1. Check /tmp first (in case updated during warm serverless lifecycle)
   try {
     const tmpPath = path.join('/tmp', 'devotionals.json');
     if (fs.existsSync(tmpPath)) {
@@ -21,7 +21,39 @@ function loadDevotionals() {
     }
   } catch (_) {}
 
-  // Check bundled data/devotionals.json
+  // 2. Try fetching latest committed version from GitHub repo if configured
+  const authHeader = (req && req.headers && req.headers['authorization']) ? req.headers['authorization'].replace(/^Bearer\s+/i, '').trim() : '';
+  const token = authHeader || process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO || 'Benedictspr/kairogram-devotionals-cms';
+
+  if (repo && typeof fetch === 'function') {
+    try {
+      const headers = {
+        'Accept': 'application/vnd.github.v3.raw',
+        'User-Agent': 'Kairogram-CMS'
+      };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      const ghResp = await fetch(`https://api.github.com/repos/${repo}/contents/data/devotionals.json`, {
+        headers
+      });
+
+      if (ghResp.ok) {
+        const ghData = await ghResp.json();
+        if (ghData && (ghData.publications || ghData.dates)) {
+          memoryStore = ghData;
+          try {
+            fs.writeFileSync(path.join('/tmp', 'devotionals.json'), JSON.stringify(ghData), 'utf8');
+          } catch (_) {}
+          return memoryStore;
+        }
+      }
+    } catch (ghErr) {
+      console.warn("[API] GitHub raw fetch notice:", ghErr.message);
+    }
+  }
+
+  // 3. Check bundled data/devotionals.json
   try {
     const filePath = getStorePath();
     if (fs.existsSync(filePath)) {
@@ -33,7 +65,7 @@ function loadDevotionals() {
     console.error("[API] Error loading devotionals.json:", err);
   }
 
-  // Baseline fallback dataset if file doesn't exist
+  // 4. Baseline fallback dataset if file doesn't exist
   memoryStore = {
     version: "1.0",
     date: new Date().toISOString().split('T')[0],
@@ -62,10 +94,14 @@ async function saveDevotionals(store, req) {
     } catch (_) {}
   }
 
-  // 3. Optional GitHub Direct Persistence
+  // 3. GitHub Direct Persistence
   const authHeader = (req && req.headers && req.headers['authorization']) ? req.headers['authorization'].replace(/^Bearer\s+/i, '').trim() : '';
   const token = authHeader || process.env.GITHUB_TOKEN;
   const repo = process.env.GITHUB_REPO || 'Benedictspr/kairogram-devotionals-cms';
+
+  let gitSaved = false;
+  let gitError = null;
+
   if (token && repo && typeof fetch === 'function') {
     try {
       const contentBase64 = Buffer.from(jsonStr, 'utf8').toString('base64');
@@ -76,13 +112,14 @@ async function saveDevotionals(store, req) {
           'User-Agent': 'Kairogram-CMS'
         }
       });
+
       let sha = '';
       if (getFileResp.ok) {
         const fileData = await getFileResp.json();
         sha = fileData.sha;
       }
 
-      await fetch(`https://api.github.com/repos/${repo}/contents/data/devotionals.json`, {
+      const putResp = await fetch(`https://api.github.com/repos/${repo}/contents/data/devotionals.json`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -96,11 +133,22 @@ async function saveDevotionals(store, req) {
           sha: sha || undefined
         })
       });
-      console.log(`[API] Saved and committed to GitHub repo: ${repo}`);
+
+      if (putResp.ok) {
+        gitSaved = true;
+        console.log(`[API] Saved and committed to GitHub repo: ${repo}`);
+      } else {
+        const errJson = await putResp.json().catch(() => ({}));
+        gitError = errJson.message || `HTTP ${putResp.status}`;
+        console.warn("[API] GitHub commit failed:", gitError);
+      }
     } catch (gitErr) {
+      gitError = gitErr.message;
       console.warn("[API] GitHub sync note:", gitErr.message);
     }
   }
+
+  return { gitSaved, gitError };
 }
 
 module.exports = async (req, res) => {
@@ -116,7 +164,7 @@ module.exports = async (req, res) => {
     return res.status(204).end();
   }
 
-  const store = loadDevotionals();
+  const store = await loadDevotionals(req);
 
   // GET: Fetch devotionals (Latest, by Date, by Church, or full library)
   if (req.method === 'GET') {
@@ -273,13 +321,15 @@ module.exports = async (req, res) => {
       }
 
       store.updatedAt = new Date().toISOString();
-      await saveDevotionals(store, req);
+      const saveResult = await saveDevotionals(store, req);
 
       return res.status(200).json({
         success: true,
         message: `Successfully ingested and published ${ingestedCount} devotional publication(s).`,
         ingestedCount,
-        updatedAt: store.updatedAt
+        updatedAt: store.updatedAt,
+        gitSaved: saveResult.gitSaved,
+        gitError: saveResult.gitError
       });
     } catch (postErr) {
       console.error("[API] POST error:", postErr);

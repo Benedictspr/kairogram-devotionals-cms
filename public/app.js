@@ -97,6 +97,68 @@
   const schemaJsonPre = document.getElementById('schemaJsonPre');
   const btnCopySchema = document.getElementById('btnCopySchema');
 
+  // Token Modal Elements
+  const btnOpenTokenModal = document.getElementById('btnOpenTokenModal');
+  const tokenModalOverlay = document.getElementById('tokenModalOverlay');
+  const btnCloseTokenModal = document.getElementById('btnCloseTokenModal');
+  const inputGhToken = document.getElementById('inputGhToken');
+  const inputGhRepo = document.getElementById('inputGhRepo');
+  const btnSaveTokenSettings = document.getElementById('btnSaveTokenSettings');
+  const btnClearTokenSettings = document.getElementById('btnClearTokenSettings');
+  const btnTokenStatusLabel = document.getElementById('btnTokenStatusLabel');
+
+  function updateTokenStatusBadge() {
+    const token = localStorage.getItem('kairogram_cms_github_token');
+    if (btnTokenStatusLabel) {
+      btnTokenStatusLabel.textContent = token ? "Connected" : "Connect Token";
+      if (btnOpenTokenModal) {
+        btnOpenTokenModal.style.borderColor = token ? "rgba(16, 185, 129, 0.4)" : "";
+        btnOpenTokenModal.style.color = token ? "#10b981" : "";
+      }
+    }
+  }
+
+  if (btnOpenTokenModal && tokenModalOverlay) {
+    btnOpenTokenModal.addEventListener('click', () => {
+      if (inputGhToken) inputGhToken.value = localStorage.getItem('kairogram_cms_github_token') || '';
+      if (inputGhRepo) inputGhRepo.value = localStorage.getItem('kairogram_cms_github_repo') || 'Benedictspr/kairogram-devotionals-cms';
+      tokenModalOverlay.classList.remove('hidden');
+    });
+  }
+
+  if (btnCloseTokenModal && tokenModalOverlay) {
+    btnCloseTokenModal.addEventListener('click', () => tokenModalOverlay.classList.add('hidden'));
+    tokenModalOverlay.addEventListener('click', (e) => {
+      if (e.target === tokenModalOverlay) tokenModalOverlay.classList.add('hidden');
+    });
+  }
+
+  if (btnSaveTokenSettings) {
+    btnSaveTokenSettings.addEventListener('click', () => {
+      const tok = (inputGhToken?.value || '').trim();
+      const rep = (inputGhRepo?.value || '').trim();
+      if (tok) {
+        localStorage.setItem('kairogram_cms_github_token', tok);
+        if (rep) localStorage.setItem('kairogram_cms_github_repo', rep);
+        showToast("GitHub Token connected! Saves are now permanently committed to repo.");
+      } else {
+        localStorage.removeItem('kairogram_cms_github_token');
+      }
+      updateTokenStatusBadge();
+      if (tokenModalOverlay) tokenModalOverlay.classList.add('hidden');
+    });
+  }
+
+  if (btnClearTokenSettings) {
+    btnClearTokenSettings.addEventListener('click', () => {
+      localStorage.removeItem('kairogram_cms_github_token');
+      if (inputGhToken) inputGhToken.value = '';
+      updateTokenStatusBadge();
+      showToast("Token cleared.");
+      if (tokenModalOverlay) tokenModalOverlay.classList.add('hidden');
+    });
+  }
+
   // 1. Mobile Tab Switching
   function switchTab(targetTab) {
     tabs.forEach(b => b.classList.toggle('active', b.getAttribute('data-tab') === targetTab));
@@ -485,7 +547,13 @@
           }
         } catch (bcErr) {}
 
-        showToast(`Published to Kairogram! (${isSs ? `${man} Lesson ${payload.lessonNum}` : dateVal}) 🎉`);
+        let successMsg = `Published to Kairogram! (${isSs ? `${man} Lesson ${payload.lessonNum}` : dateVal})`;
+        if (res.gitSaved) {
+          successMsg += ' 🔒 (Permanent GitHub Backup Saved)';
+        } else if (res.gitError) {
+          console.warn("GitHub commit note:", res.gitError);
+        }
+        showToast(successMsg + ' 🎉');
         fetchStoredLibrary();
       } else {
         showToast(`Error: ${res.error || 'Failed to publish'}`);
@@ -881,5 +949,6 @@
   adaptFormToChurch();
   fetchStoredLibrary();
   loadSelectedSchema('open_heavens');
+  updateTokenStatusBadge();
 
 })();
