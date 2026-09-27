@@ -600,21 +600,60 @@
   function renderLibraryCards(filterChurch = 'all') {
     if (!libraryGrid) return;
     const store = fullDatabaseCache;
-    if (!store || !store.dates) {
+    if (!store) {
       libraryGrid.innerHTML = `<div class="mobile-empty-state"><p>No stored devotionals found.</p></div>`;
       return;
     }
 
     const items = [];
-    for (const [dateKey, pubs] of Object.entries(store.dates)) {
-      for (const [pubKey, entry] of Object.entries(pubs)) {
-        if (filterChurch === 'all' || entry.church === filterChurch) {
-          items.push({ dateKey, pubKey, ...entry });
+    const seen = new Set();
+
+    // 1. Collect from dates
+    if (store.dates) {
+      for (const [dateKey, pubs] of Object.entries(store.dates)) {
+        for (const [pubKey, entry] of Object.entries(pubs)) {
+          if (!entry || !entry.manual) continue;
+          const dedupeKey = `${entry.church}_${entry.manual}_${entry.date || dateKey}`;
+          if (seen.has(dedupeKey)) continue;
+          seen.add(dedupeKey);
+          if (filterChurch === 'all' || entry.church === filterChurch) {
+            items.push({ dateKey: entry.date || dateKey, pubKey, ...entry });
+          }
         }
       }
     }
 
-    items.sort((a, b) => b.dateKey.localeCompare(a.dateKey));
+    // 2. Ensure all Sunday School lessons are visible
+    if (Array.isArray(store.sunday_school_lessons)) {
+      for (const ssEntry of store.sunday_school_lessons) {
+        if (!ssEntry || !ssEntry.manual) continue;
+        const dKey = ssEntry.date || store.date || new Date().toISOString().split('T')[0];
+        const dedupeKey = `${ssEntry.church || 'rccg'}_${ssEntry.manual}_${dKey}`;
+        if (!seen.has(dedupeKey)) {
+          seen.add(dedupeKey);
+          if (filterChurch === 'all' || (ssEntry.church || 'rccg') === filterChurch) {
+            items.push({ dateKey: dKey, pubKey: ssEntry.manual, ...ssEntry });
+          }
+        }
+      }
+    }
+
+    // 3. Check publications
+    if (store.publications) {
+      for (const [pubKey, entry] of Object.entries(store.publications)) {
+        if (!entry || !entry.manual) continue;
+        const dKey = entry.date || store.date || new Date().toISOString().split('T')[0];
+        const dedupeKey = `${entry.church}_${entry.manual}_${dKey}`;
+        if (!seen.has(dedupeKey)) {
+          seen.add(dedupeKey);
+          if (filterChurch === 'all' || entry.church === filterChurch) {
+            items.push({ dateKey: dKey, pubKey, ...entry });
+          }
+        }
+      }
+    }
+
+    items.sort((a, b) => (b.dateKey || '').localeCompare(a.dateKey || ''));
     if (countStoredLib) countStoredLib.textContent = items.length;
     if (libraryCountBadge) libraryCountBadge.textContent = items.length;
 
@@ -626,7 +665,7 @@
     libraryGrid.innerHTML = items.map(item => `
       <div class="mobile-lib-card" data-edit-item="${escapeHtml(item.dateKey)}|${escapeHtml(item.church)}|${escapeHtml(item.manual)}">
         <div class="lib-card-meta">
-          <span class="lib-badge">${escapeHtml(item.church.toUpperCase())} • ${escapeHtml(item.manual)}</span>
+          <span class="lib-badge">${escapeHtml((item.church || 'RCCG').toUpperCase())} • ${escapeHtml(item.manual)}</span>
           <span class="lib-date">${escapeHtml(item.dateKey)}</span>
         </div>
         <div class="lib-title">${escapeHtml(item.topic || 'Untitled')}</div>
@@ -638,7 +677,9 @@
     libraryGrid.querySelectorAll('[data-edit-item]').forEach(card => {
       card.addEventListener('click', () => {
         const [d, ch, man] = card.getAttribute('data-edit-item').split('|');
-        const entry = store.dates[d] && store.dates[d][`${ch}_${man}`];
+        let entry = (store.dates && store.dates[d] && (store.dates[d][`${ch}_${man}`] || store.dates[d][man])) ||
+                    (store.publications && (store.publications[`${ch}_${man}`] || store.publications[man])) ||
+                    (Array.isArray(store.sunday_school_lessons) && store.sunday_school_lessons.find(l => l.manual === man && (l.date === d || !d)));
         if (entry) {
           formChurch.value = entry.church || 'rccg';
           updateManualDropdownForChurch(entry.church || 'rccg', entry.manual || 'open_heavens');

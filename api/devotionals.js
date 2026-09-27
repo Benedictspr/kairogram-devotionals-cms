@@ -11,7 +11,20 @@ function getStorePath() {
 async function loadDevotionals(req) {
   if (memoryStore) return memoryStore;
   
-  // 1. Check /tmp first (in case updated during warm serverless lifecycle)
+  // 1. Check local disk first when running locally (outside Vercel)
+  const isVercel = !!process.env.VERCEL;
+  if (!isVercel) {
+    try {
+      const filePath = getStorePath();
+      if (fs.existsSync(filePath)) {
+        const data = fs.readFileSync(filePath, 'utf8');
+        memoryStore = JSON.parse(data);
+        return memoryStore;
+      }
+    } catch (_) {}
+  }
+
+  // 2. Check /tmp first in serverless environment
   try {
     const tmpPath = path.join('/tmp', 'devotionals.json');
     if (fs.existsSync(tmpPath)) {
@@ -21,7 +34,7 @@ async function loadDevotionals(req) {
     }
   } catch (_) {}
 
-  // 2. Try fetching latest committed version from GitHub repo if configured
+  // 3. Try fetching latest committed version from GitHub repo if configured
   const authHeader = (req && req.headers && req.headers['authorization']) ? req.headers['authorization'].replace(/^Bearer\s+/i, '').trim() : '';
   const token = authHeader || process.env.GITHUB_TOKEN;
   const repo = process.env.GITHUB_REPO || 'Benedictspr/kairogram-devotionals-cms';
@@ -312,11 +325,17 @@ module.exports = async (req, res) => {
           }
         }
 
-        // Store into date map
+        // Store into date map under both pubKey and clean manual key
         store.dates[dateStr][pubKey] = entryPayload;
+        if (pubKey !== manual) {
+          store.dates[dateStr][manual] = entryPayload;
+        }
 
-        // Also update latest publications pointer
+        // Also update latest publications pointer under both keys
         store.publications[pubKey] = entryPayload;
+        if (pubKey !== manual) {
+          store.publications[manual] = entryPayload;
+        }
         ingestedCount++;
       }
 
