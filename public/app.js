@@ -200,18 +200,6 @@
     rccg: [
       { val: 'open_heavens', label: 'Open Heavens Daily Devotional' }
     ],
-    rccg_ss_adult: [
-      { val: 'rccg_ss_adult', label: 'Sunday School (Adult - Student Manual)' }
-    ],
-    rccg_ss_teacher: [
-      { val: 'rccg_ss_teacher', label: "Sunday School (Adult - Teacher's Guide)" }
-    ],
-    rccg_yaya_student: [
-      { val: 'rccg_yaya_student', label: 'YAYA Sunday School (Youth - Student Manual)' }
-    ],
-    rccg_yaya_teacher: [
-      { val: 'rccg_yaya_teacher', label: "YAYA (Youth - Teacher's Guide)" }
-    ],
     dclm: [
       { val: 'dclm', label: 'Daily Manna (Deeper Life)' }
     ],
@@ -399,10 +387,6 @@
       const ch = formChurch.value;
       const authors = {
         rccg: "Pastor E.A. Adeboye",
-        rccg_ss_adult: "RCCG Sunday School Directorate",
-        rccg_ss_teacher: "RCCG Sunday School Directorate (Teacher's Guide)",
-        rccg_yaya_student: "RCCG YAYA Sunday School Directorate",
-        rccg_yaya_teacher: "RCCG YAYA Sunday School (Youth Teacher's Guide)",
         dclm: "Pastor W.F. Kumuyi",
         mfm: "Dr. D.K. Olukoya",
         christ_embassy: "Pastor Chris Oyakhilome",
