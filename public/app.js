@@ -487,10 +487,14 @@
     if (formDevotionalCapsule && formDevotionalCapsule.value.trim()) payload.devotionalCapsule = formDevotionalCapsule.value.trim();
 
     // Sunday School Specific
+    // Sunday School Specific
     if (isSs) {
       payload.isSundaySchool = true;
       payload.lessonNum = formLessonNum ? parseInt(formLessonNum.value, 10) || 1 : 1;
       payload.introduction = formSsIntro ? formSsIntro.value.trim() : "";
+      if (!payload.introduction && formMessageText && formMessageText.value.trim()) {
+        payload.introduction = msgParas[0] || formMessageText.value.trim();
+      }
       payload.teachingAim = formSsTeacherAim ? formSsTeacherAim.value.trim() : "";
       if (formSsTeacherObjectives && formSsTeacherObjectives.value.trim()) {
         payload.teacherObjectives = formSsTeacherObjectives.value.split('\n').map(o => o.trim()).filter(Boolean);
@@ -511,7 +515,11 @@
       const outlines = [];
       if (formSsOutline1 && formSsOutline1.value.trim()) outlines.push(formSsOutline1.value.trim());
       if (formSsOutline2 && formSsOutline2.value.trim()) outlines.push(formSsOutline2.value.trim());
-      payload.outlines = outlines;
+      if (outlines.length === 0 && msgParas.length > 1) {
+        payload.outlines = msgParas.slice(1);
+      } else {
+        payload.outlines = outlines;
+      }
     }
 
     // Set buttons loading
@@ -537,9 +545,20 @@
       const res = await resp.json();
 
       if (resp.ok && res.success) {
-        // 2. Synchronous local storage persistence
+        // 2. Synchronous local storage persistence across all alias keys
         try {
-          localStorage.setItem(`kairogram_cloud_dev_${ch}_${man}`, JSON.stringify(payload));
+          const cleanM = man.replace(/^rccg_/, '');
+          const cleanC = ch.replace(/^rccg_/, '');
+          const allK = [
+            `kairogram_cloud_dev_${ch}_${man}`,
+            `kairogram_cloud_dev_${man}`,
+            `kairogram_cloud_dev_${cleanM}`,
+            `kairogram_cloud_dev_${ch}`,
+            `kairogram_cloud_dev_rccg_${cleanM}`
+          ];
+          allK.forEach(k => {
+            localStorage.setItem(k, JSON.stringify(payload));
+          });
           localStorage.setItem('kairogram_cms_last_published', JSON.stringify({
             timestamp: Date.now(),
             entry: payload

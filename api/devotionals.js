@@ -315,8 +315,10 @@ module.exports = async (req, res) => {
           entryPayload.markingScheme = item.markingScheme || "";
 
           // Also push to sunday_school_lessons array
+          const cleanMan = manual.replace(/^rccg_/, '');
           const existingIdx = store.sunday_school_lessons.findIndex(l => 
-            Number(l.lessonNum) === Number(item.lessonNum) && (l.manual === manual || l.manual === church)
+            Number(l.lessonNum) === Number(item.lessonNum) && 
+            (l.manual === manual || l.manual === church || (l.manual||'').replace(/^rccg_/, '') === cleanMan)
           );
           if (existingIdx !== -1) {
             store.sunday_school_lessons[existingIdx] = entryPayload;
@@ -325,23 +327,22 @@ module.exports = async (req, res) => {
           }
         }
 
-        // Store into date map under pubKey, manual, and church keys
-        store.dates[dateStr][pubKey] = entryPayload;
-        store.dates[dateStr][manual] = entryPayload;
-        store.dates[dateStr][church] = entryPayload;
-        if (manual.startsWith('rccg_')) {
-          store.dates[dateStr][manual.replace(/^rccg_/, '')] = entryPayload;
-          store.dates[dateStr][`rccg_${manual}`] = entryPayload;
-        }
+        // Store into date map under pubKey, manual, church, and all alias keys
+        const cleanMan = manual.replace(/^rccg_/, '');
+        const aliasKeys = [
+          pubKey,
+          manual,
+          church,
+          cleanMan,
+          `rccg_${cleanMan}`,
+          `rccg_rccg_${cleanMan}`,
+          `${church}_${manual}`
+        ].filter(Boolean);
 
-        // Also update latest publications pointer under all alias keys
-        store.publications[pubKey] = entryPayload;
-        store.publications[manual] = entryPayload;
-        store.publications[church] = entryPayload;
-        if (manual.startsWith('rccg_')) {
-          store.publications[manual.replace(/^rccg_/, '')] = entryPayload;
-          store.publications[`rccg_${manual}`] = entryPayload;
-        }
+        aliasKeys.forEach(k => {
+          store.dates[dateStr][k] = entryPayload;
+          store.publications[k] = entryPayload;
+        });
         ingestedCount++;
       }
 
