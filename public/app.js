@@ -198,11 +198,19 @@
   // 3. Form Church Adaptability Engine (Strict Church Isolation)
   const churchManualOptions = {
     rccg: [
-      { val: 'open_heavens', label: 'Open Heavens Daily Devotional' },
-      { val: 'rccg_ss_adult', label: 'RCCG Sunday School (Adult - Student Manual)' },
-      { val: 'rccg_ss_teacher', label: 'RCCG Sunday School (Adult - Teacher\'s Guide)' },
-      { val: 'rccg_yaya_student', label: 'RCCG YAYA Sunday School (Youth - Student Manual)' },
-      { val: 'rccg_yaya_teacher', label: 'RCCG YAYA Sunday School (Youth - Teacher\'s Guide)' }
+      { val: 'open_heavens', label: 'Open Heavens Daily Devotional' }
+    ],
+    rccg_ss_adult: [
+      { val: 'rccg_ss_adult', label: 'Sunday School (Adult - Student Manual)' }
+    ],
+    rccg_ss_teacher: [
+      { val: 'rccg_ss_teacher', label: "Sunday School (Adult - Teacher's Guide)" }
+    ],
+    rccg_yaya_student: [
+      { val: 'rccg_yaya_student', label: 'YAYA Sunday School (Youth - Student Manual)' }
+    ],
+    rccg_yaya_teacher: [
+      { val: 'rccg_yaya_teacher', label: "YAYA (Youth - Teacher's Guide)" }
     ],
     dclm: [
       { val: 'dclm', label: 'Daily Manna (Deeper Life)' }
@@ -238,9 +246,9 @@
   function adaptFormToChurch() {
     const ch = formChurch.value;
     const man = formManual.value;
-    const isSs = man.startsWith('rccg_ss') || man.startsWith('rccg_yaya');
-    const isTeacher = man.includes('teacher');
-    const isYaya = man.includes('yaya');
+    const isSs = ch.includes('ss') || ch.includes('yaya') || man.includes('ss') || man.includes('yaya');
+    const isTeacher = ch.includes('teacher') || man.includes('teacher');
+    const isYaya = ch.includes('yaya') || man.includes('yaya');
 
     // 1. Hide ALL optional sections by default (Clean slate)
     const allOptionalGroups = [
@@ -256,9 +264,9 @@
     // 2. Case A: Sunday School Manuals (Adult Student, Adult Teacher, YAYA Student, YAYA Teacher)
     if (isSs) {
       if (formHeaderTitle) {
-        if (man === 'rccg_ss_teacher') formHeaderTitle.textContent = "RCCG Sunday School (Adult - Teacher's Guide)";
-        else if (man === 'rccg_yaya_teacher') formHeaderTitle.textContent = "RCCG YAYA (Youth - Teacher's Guide)";
-        else if (man === 'rccg_yaya_student') formHeaderTitle.textContent = "RCCG YAYA (Youth - Student Manual)";
+        if (isTeacher && isYaya) formHeaderTitle.textContent = "RCCG YAYA (Youth - Teacher's Guide)";
+        else if (isTeacher) formHeaderTitle.textContent = "RCCG Sunday School (Adult - Teacher's Guide)";
+        else if (isYaya) formHeaderTitle.textContent = "RCCG YAYA (Youth - Student Manual)";
         else formHeaderTitle.textContent = "RCCG Sunday School (Adult - Student Manual)";
       }
 
@@ -391,6 +399,10 @@
       const ch = formChurch.value;
       const authors = {
         rccg: "Pastor E.A. Adeboye",
+        rccg_ss_adult: "RCCG Sunday School Directorate",
+        rccg_ss_teacher: "RCCG Sunday School Directorate (Teacher's Guide)",
+        rccg_yaya_student: "RCCG YAYA Sunday School Directorate",
+        rccg_yaya_teacher: "RCCG YAYA Sunday School (Youth Teacher's Guide)",
         dclm: "Pastor W.F. Kumuyi",
         mfm: "Dr. D.K. Olukoya",
         christ_embassy: "Pastor Chris Oyakhilome",
@@ -402,6 +414,7 @@
 
       updateManualDropdownForChurch(ch);
       adaptFormToChurch();
+      syncLessonNumWithDate();
     });
   }
 
@@ -433,9 +446,9 @@
 
     const ch = formChurch.value;
     const man = formManual.value;
-    const isSs = man.startsWith('rccg_ss') || man.startsWith('rccg_yaya');
-    const isTeacher = man.includes('teacher');
-    const isYaya = man.includes('yaya');
+    const isSs = ch.includes('ss') || ch.includes('yaya') || man.includes('ss') || man.includes('yaya');
+    const isTeacher = ch.includes('teacher') || man.includes('teacher');
+    const isYaya = ch.includes('yaya') || man.includes('yaya');
 
     const msgParas = formMessageText.value.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
     const prayerPts = formPrayerPoints.value.split('\n').map(p => p.trim()).filter(Boolean);
@@ -597,6 +610,38 @@
     }
   }
 
+  // HTML Escaper to prevent injection & ReferenceError crashes
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function matchesFilter(item, filter) {
+    if (!filter || filter === 'all') return true;
+    const man = item.manual || '';
+    const ch = item.church || '';
+    if (filter === 'rccg') return (ch === 'rccg' && (man === 'open_heavens' || !man.includes('ss')));
+    if (filter === 'rccg_ss_adult') return man === 'rccg_ss_adult' || man === 'ss_adult' || ch === 'rccg_ss_adult';
+    if (filter === 'rccg_ss_teacher') return man === 'rccg_ss_teacher' || man === 'ss_teacher' || ch === 'rccg_ss_teacher';
+    if (filter === 'rccg_yaya_student') return man === 'rccg_yaya_student' || man === 'yaya_student' || ch === 'rccg_yaya_student';
+    if (filter === 'rccg_yaya_teacher') return man === 'rccg_yaya_teacher' || man === 'yaya_teacher' || ch === 'rccg_yaya_teacher';
+    return ch === filter || man === filter;
+  }
+
+  function getBadgeLabel(item) {
+    const man = item.manual || '';
+    if (man === 'rccg_ss_adult' || man === 'ss_adult') return 'SUNDAY SCHOOL (ADULT)';
+    if (man === 'rccg_ss_teacher' || man === 'ss_teacher') return 'SUNDAY SCHOOL (TEACHER)';
+    if (man === 'rccg_yaya_student' || man === 'yaya_student') return 'YAYA SUNDAY SCHOOL';
+    if (man === 'rccg_yaya_teacher' || man === 'yaya_teacher') return 'YAYA (TEACHER)';
+    return `${(item.church || 'RCCG').toUpperCase()} • ${man.toUpperCase()}`;
+  }
+
   function renderLibraryCards(filterChurch = 'all') {
     if (!libraryGrid) return;
     const store = fullDatabaseCache;
@@ -616,7 +661,7 @@
           const dedupeKey = `${entry.church}_${entry.manual}_${entry.date || dateKey}`;
           if (seen.has(dedupeKey)) continue;
           seen.add(dedupeKey);
-          if (filterChurch === 'all' || entry.church === filterChurch) {
+          if (matchesFilter(entry, filterChurch)) {
             items.push({ dateKey: entry.date || dateKey, pubKey, ...entry });
           }
         }
@@ -631,7 +676,7 @@
         const dedupeKey = `${ssEntry.church || 'rccg'}_${ssEntry.manual}_${dKey}`;
         if (!seen.has(dedupeKey)) {
           seen.add(dedupeKey);
-          if (filterChurch === 'all' || (ssEntry.church || 'rccg') === filterChurch) {
+          if (matchesFilter(ssEntry, filterChurch)) {
             items.push({ dateKey: dKey, pubKey: ssEntry.manual, ...ssEntry });
           }
         }
@@ -646,7 +691,7 @@
         const dedupeKey = `${entry.church}_${entry.manual}_${dKey}`;
         if (!seen.has(dedupeKey)) {
           seen.add(dedupeKey);
-          if (filterChurch === 'all' || entry.church === filterChurch) {
+          if (matchesFilter(entry, filterChurch)) {
             items.push({ dateKey: dKey, pubKey, ...entry });
           }
         }
@@ -665,7 +710,7 @@
     libraryGrid.innerHTML = items.map(item => `
       <div class="mobile-lib-card" data-edit-item="${escapeHtml(item.dateKey)}|${escapeHtml(item.church)}|${escapeHtml(item.manual)}">
         <div class="lib-card-meta">
-          <span class="lib-badge">${escapeHtml((item.church || 'RCCG').toUpperCase())} • ${escapeHtml(item.manual)}</span>
+          <span class="lib-badge">${escapeHtml(getBadgeLabel(item))}</span>
           <span class="lib-date">${escapeHtml(item.dateKey)}</span>
         </div>
         <div class="lib-title">${escapeHtml(item.topic || 'Untitled')}</div>
@@ -677,12 +722,13 @@
     libraryGrid.querySelectorAll('[data-edit-item]').forEach(card => {
       card.addEventListener('click', () => {
         const [d, ch, man] = card.getAttribute('data-edit-item').split('|');
-        let entry = (store.dates && store.dates[d] && (store.dates[d][`${ch}_${man}`] || store.dates[d][man])) ||
-                    (store.publications && (store.publications[`${ch}_${man}`] || store.publications[man])) ||
-                    (Array.isArray(store.sunday_school_lessons) && store.sunday_school_lessons.find(l => l.manual === man && (l.date === d || !d)));
+        let entry = (store.dates && store.dates[d] && (store.dates[d][`${ch}_${man}`] || store.dates[d][man] || store.dates[d][ch])) ||
+                    (store.publications && (store.publications[`${ch}_${man}`] || store.publications[man] || store.publications[ch])) ||
+                    (Array.isArray(store.sunday_school_lessons) && store.sunday_school_lessons.find(l => (l.manual === man || l.manual === ch) && (l.date === d || !d)));
         if (entry) {
-          formChurch.value = entry.church || 'rccg';
-          updateManualDropdownForChurch(entry.church || 'rccg', entry.manual || 'open_heavens');
+          const targetChurch = (man.startsWith('rccg_ss') || man.startsWith('rccg_yaya')) ? man : (entry.church || 'rccg');
+          formChurch.value = targetChurch;
+          updateManualDropdownForChurch(targetChurch, entry.manual || man);
           adaptFormToChurch();
 
           formDate.value = entry.date || d;
@@ -1017,8 +1063,9 @@
 
   function syncLessonNumWithDate() {
     if (!formDate || !formLessonNum) return;
+    const ch = formChurch ? formChurch.value : '';
     const man = formManual ? formManual.value : '';
-    if (man.startsWith('rccg_ss') || man.startsWith('rccg_yaya')) {
+    if (ch.includes('ss') || ch.includes('yaya') || man.includes('ss') || man.includes('yaya')) {
       const computedL = calculateLessonNumberFromDate(formDate.value);
       formLessonNum.value = computedL;
       if (lblSsAutoDetected) lblSsAutoDetected.textContent = `Lesson ${computedL} (Auto-calculated for ${formDate.value})`;

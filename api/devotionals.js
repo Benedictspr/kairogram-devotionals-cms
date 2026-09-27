@@ -258,7 +258,7 @@ module.exports = async (req, res) => {
         const church = item.church || 'rccg';
         const manual = item.manual || (church === 'rccg' ? 'open_heavens' : church);
         const dateStr = item.date || new Date().toISOString().split('T')[0];
-        const pubKey = `${church}_${manual}`;
+        const pubKey = (church === manual || !church || !manual) ? (manual || church) : `${church}_${manual}`;
 
         // Ensure date node exists
         if (!store.dates[dateStr]) store.dates[dateStr] = {};
@@ -300,7 +300,7 @@ module.exports = async (req, res) => {
         };
 
         // If Sunday school, include specific outlines
-        if (item.isSundaySchool || manual.includes('ss') || manual.includes('sunday_school') || manual.includes('yaya')) {
+        if (item.isSundaySchool || church.includes('ss') || church.includes('yaya') || manual.includes('ss') || manual.includes('sunday_school') || manual.includes('yaya')) {
           entryPayload.isSundaySchool = true;
           entryPayload.lessonNum = item.lessonNum || 1;
           entryPayload.introduction = item.introduction || "";
@@ -316,7 +316,7 @@ module.exports = async (req, res) => {
 
           // Also push to sunday_school_lessons array
           const existingIdx = store.sunday_school_lessons.findIndex(l => 
-            Number(l.lessonNum) === Number(item.lessonNum) && l.manual === manual
+            Number(l.lessonNum) === Number(item.lessonNum) && (l.manual === manual || l.manual === church)
           );
           if (existingIdx !== -1) {
             store.sunday_school_lessons[existingIdx] = entryPayload;
@@ -325,16 +325,22 @@ module.exports = async (req, res) => {
           }
         }
 
-        // Store into date map under both pubKey and clean manual key
+        // Store into date map under pubKey, manual, and church keys
         store.dates[dateStr][pubKey] = entryPayload;
-        if (pubKey !== manual) {
-          store.dates[dateStr][manual] = entryPayload;
+        store.dates[dateStr][manual] = entryPayload;
+        store.dates[dateStr][church] = entryPayload;
+        if (manual.startsWith('rccg_')) {
+          store.dates[dateStr][manual.replace(/^rccg_/, '')] = entryPayload;
+          store.dates[dateStr][`rccg_${manual}`] = entryPayload;
         }
 
-        // Also update latest publications pointer under both keys
+        // Also update latest publications pointer under all alias keys
         store.publications[pubKey] = entryPayload;
-        if (pubKey !== manual) {
-          store.publications[manual] = entryPayload;
+        store.publications[manual] = entryPayload;
+        store.publications[church] = entryPayload;
+        if (manual.startsWith('rccg_')) {
+          store.publications[manual.replace(/^rccg_/, '')] = entryPayload;
+          store.publications[`rccg_${manual}`] = entryPayload;
         }
         ingestedCount++;
       }
