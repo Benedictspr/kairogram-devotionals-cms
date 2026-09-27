@@ -980,14 +980,78 @@
     });
   }
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  function formatIsoDate(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function getNextSundayDate() {
+    const d = new Date();
+    const day = d.getDay();
+    const diff = (7 - day) % 7;
+    d.setDate(d.getDate() + diff);
+    return d;
+  }
+
+  function calculateLessonNumberFromDate(dateStr) {
+    if (!dateStr) return 4;
+    // RCCG Sunday School Year starts 1st Sunday of September (Sept 6, 2026 = Lesson 1)
+    const dt = new Date(dateStr + 'T00:00:00');
+    const year = dt.getFullYear();
+    const sept1 = new Date(year, 8, 1);
+    const dayOfSept1 = sept1.getDay();
+    const firstSundaySept = new Date(year, 8, 1 + ((7 - dayOfSept1) % 7));
+    const diffDays = Math.round((dt - firstSundaySept) / (1000 * 60 * 60 * 24));
+    if (diffDays >= 0) {
+      const lesson = Math.floor(diffDays / 7) + 1;
+      return Math.min(52, Math.max(1, lesson));
+    }
+    return 4;
+  }
+
+  const btnDateToday = document.getElementById('btnDateToday');
+  const btnDateSunday = document.getElementById('btnDateSunday');
+  const lblSsAutoDetected = document.getElementById('lblSsAutoDetected');
+
+  function syncLessonNumWithDate() {
+    if (!formDate || !formLessonNum) return;
+    const man = formManual ? formManual.value : '';
+    if (man.startsWith('rccg_ss') || man.startsWith('rccg_yaya')) {
+      const computedL = calculateLessonNumberFromDate(formDate.value);
+      formLessonNum.value = computedL;
+      if (lblSsAutoDetected) lblSsAutoDetected.textContent = `Lesson ${computedL} (Auto-calculated for ${formDate.value})`;
+    }
+  }
+
+  if (btnDateToday && formDate) {
+    btnDateToday.addEventListener('click', () => {
+      formDate.value = formatIsoDate(new Date());
+      syncLessonNumWithDate();
+      showToast("Date set to Today (" + formDate.value + ")");
+    });
+  }
+
+  if (btnDateSunday && formDate) {
+    btnDateSunday.addEventListener('click', () => {
+      formDate.value = formatIsoDate(getNextSundayDate());
+      syncLessonNumWithDate();
+      showToast("Date set to Sunday (" + formDate.value + ")");
+    });
+  }
+
+  if (formDate) {
+    formDate.addEventListener('change', syncLessonNumWithDate);
   }
 
   // Initial Load & Form Adaptation
+  if (formDate && (!formDate.value || formDate.value === '2026-09-20')) {
+    formDate.value = formatIsoDate(new Date());
+  }
   if (formChurch) updateManualDropdownForChurch(formChurch.value);
   adaptFormToChurch();
+  syncLessonNumWithDate();
   fetchStoredLibrary();
   loadSelectedSchema('open_heavens');
   updateTokenStatusBadge();

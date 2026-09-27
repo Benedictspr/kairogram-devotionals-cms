@@ -124,13 +124,22 @@
 
           <!-- Sunday School Lesson Number (Shown for SS) -->
           <div class="mobile-field-group hidden" id="groupSsLessonNum">
-            <label class="field-label">Lesson Number</label>
-            <input type="number" class="mobile-input-lg" id="formLessonNum" value="3" placeholder="e.g. 3">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="field-label" style="margin:0;">Lesson Number</label>
+              <span id="lblSsAutoDetected" style="font-size:11px; color:#10b981; font-weight:600;"></span>
+            </div>
+            <input type="number" class="mobile-input-lg" id="formLessonNum" min="1" max="52" placeholder="e.g. 4">
           </div>
 
           <div class="mobile-field-group">
-            <label class="field-label">Date</label>
-            <input type="date" class="mobile-input-lg" id="formDate" value="2026-09-20">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label class="field-label" style="margin:0;">Date</label>
+              <div style="display:flex; gap:6px;">
+                <button type="button" class="filter-pill" id="btnDateToday" style="padding:2px 8px; font-size:11px; height:auto;">Today</button>
+                <button type="button" class="filter-pill" id="btnDateSunday" style="padding:2px 8px; font-size:11px; height:auto;">Sunday</button>
+              </div>
+            </div>
+            <input type="date" class="mobile-input-lg" id="formDate">
           </div>
 
           <div class="mobile-field-group">
