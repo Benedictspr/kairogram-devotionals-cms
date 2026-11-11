@@ -2,7 +2,7 @@
   "version": "1.0",
   "date": "2026-09-18",
   "dateLabel": "Friday, September 18, 2026",
-  "updatedAt": "2026-11-11T20:59:44.831Z",
+  "updatedAt": "2026-11-11T20:59:51.424Z",
   "source": "Kairogram Devotionals Cloud CMS (Vercel Live Feed)",
   "publications": {
     "rccg_open_heavens": {
@@ -43,7 +43,7 @@
       "assignments": "",
       "readTime": "4 min read",
       "source": "Kairogram Devotionals Cloud CMS",
-      "updatedAt": "2026-11-11T20:59:44.831Z"
+      "updatedAt": "2026-11-11T20:59:51.424Z"
     },
     "mfm_mfm": {
       "church": "mfm",
@@ -1165,7 +1165,7 @@
       "assignments": "",
       "readTime": "4 min read",
       "source": "Kairogram Devotionals Cloud CMS",
-      "updatedAt": "2026-11-11T20:59:44.831Z"
+      "updatedAt": "2026-11-11T20:59:51.424Z"
     },
     "rccg": {
       "church": "rccg",
@@ -1205,7 +1205,7 @@
       "assignments": "",
       "readTime": "4 min read",
       "source": "Kairogram Devotionals Cloud CMS",
-      "updatedAt": "2026-11-11T20:59:44.831Z"
+      "updatedAt": "2026-11-11T20:59:51.424Z"
     },
     "rccg_rccg_open_heavens": {
       "church": "rccg",
@@ -1245,7 +1245,7 @@
       "assignments": "",
       "readTime": "4 min read",
       "source": "Kairogram Devotionals Cloud CMS",
-      "updatedAt": "2026-11-11T20:59:44.831Z"
+      "updatedAt": "2026-11-11T20:59:51.424Z"
     },
     "mfm": {
       "church": "mfm",
@@ -7767,7 +7767,7 @@
         "assignments": "",
         "readTime": "4 min read",
         "source": "Kairogram Devotionals Cloud CMS",
-        "updatedAt": "2026-11-11T20:59:44.831Z"
+        "updatedAt": "2026-11-11T20:59:51.424Z"
       },
       "open_heavens": {
         "church": "rccg",
@@ -7807,7 +7807,7 @@
         "assignments": "",
         "readTime": "4 min read",
         "source": "Kairogram Devotionals Cloud CMS",
-        "updatedAt": "2026-11-11T20:59:44.831Z"
+        "updatedAt": "2026-11-11T20:59:51.424Z"
       },
       "rccg": {
         "church": "rccg",
@@ -7847,7 +7847,7 @@
         "assignments": "",
         "readTime": "4 min read",
         "source": "Kairogram Devotionals Cloud CMS",
-        "updatedAt": "2026-11-11T20:59:44.831Z"
+        "updatedAt": "2026-11-11T20:59:51.424Z"
       },
       "rccg_rccg_open_heavens": {
         "church": "rccg",
@@ -7887,7 +7887,7 @@
         "assignments": "",
         "readTime": "4 min read",
         "source": "Kairogram Devotionals Cloud CMS",
-        "updatedAt": "2026-11-11T20:59:44.831Z"
+        "updatedAt": "2026-11-11T20:59:51.424Z"
       }
     }
   },
